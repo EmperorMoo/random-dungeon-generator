@@ -1,21 +1,20 @@
 import random 
 
- 
+ #Eventually need to allow for selection of variables by user.
 
-dungeon_name = "The Illusory Tower" 
+dungeon_name = input("Enter the name of the dungeon: ") 
 
-rooms = random.randint(3, 8) 
+room_choice = input("Would you like to choose the number of rooms? (y/n): ")
+if room_choice == "y":
+    rooms = int(input("Enter the number of rooms: "))
+else:
+    rooms = random.randint(3, 8) 
 
-monsters = random.randint(1, 10) 
 
-room_type = random.randint(1, 3)
    
-
 monster_types = ["Goblin", "Orc", "Skeleton", "Kobold", "Zombie", "Wolf", "Gremlin"] 
 
 treasure_types = ["Gold Coins", "Platinum Coins", "Ruby", "Greatsword", "Emerald"] 
-
- 
 
 print(f"Welcome to {dungeon_name}") 
 
@@ -23,18 +22,20 @@ print(f"Welcome to {dungeon_name}")
 
 for room in range(1, rooms + 1): #Have to figure out how loops work. I fixed it with indents!
 
-    encounter = random.choice(monster_types) 
 
-    loot = random.choice(treasure_types) 
+  
 
-    room_type = random.randint(1, 3)
+
 
     print(f"Room {room}") 
+    room_type = random.randint(1, 3)
     if room_type == 1:
-        print(f"You encounter a {encounter}") 
-
+        monsters = random.randint(1, 4) 
+        for monster in range(1, monsters + 1):
+            encounter = random.choice(monster_types) 
+            print(f"Monster {monster}: {encounter}")
     elif room_type == 2:
-
+        loot = random.choice(treasure_types) 
         print(f"You find a {loot}") 
     else:
         print("The room is empty.")        
