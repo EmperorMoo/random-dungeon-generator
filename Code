@@ -1,0 +1,35 @@
+import random 
+
+ 
+
+dungeon_name = "The Illusory Tower" 
+
+rooms = random.randint(3, 8) 
+
+monsters = random.randint(1, 10) 
+
+ 
+
+monster_types = ["Goblin", "Orc", "Skeleton", "Kobold", "Zombie", "Wolf", "Gremlin"] 
+
+treasure_types = ["Gold Coins", "Platinum Coins", "Ruby", "Greatsword", "Emerald"] 
+
+ 
+
+print(f"Welcome to {dungeon_name}") 
+
+ 
+
+for room in range(1, rooms + 1): 
+
+    encounter = random.choice(monster_types) 
+
+    loot = random.choice(treasure_types) 
+
+ 
+
+    print(f"Room {room}") 
+
+    print(f"You encounter a {encounter}") 
+
+    print(f"You find a {loot}") 
