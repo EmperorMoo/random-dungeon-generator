@@ -8,19 +8,16 @@ room_choice = input("Would you like to choose the number of rooms? (y/n): ").low
 if room_choice == "y":
     while True: 
         try:
-            rooms = int(input("Enter a number: "))
-            print(f"There are {rooms} rooms in the dungeon.")
+            rooms = int(input("Enter a number of rooms between 1 and 20: "))
+            if rooms < 1 or rooms > 20:
+                print("Invalid number of rooms. Try again.")
+            else:
+                print(f"Generating {rooms} rooms.")
             break
+
         except ValueError:
             print("Invalid input. Please enter a valid number.")
 
-    while rooms < 1 or rooms > 20:#Need to figure out how to combine this with the above while loop to avoid code duplication.
-        print("Invalid number of rooms. Try again")
-
-    else:
-        rooms = int(input("Enter the number of rooms between 1 and 20: "))
-       
-        print(f"Generating {rooms} rooms.")
 elif room_choice == "n":
     rooms = random.randint(3, 8)
 else:
