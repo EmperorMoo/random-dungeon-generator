@@ -7,6 +7,19 @@ import random
 min_monsters = 1
 
 dungeon_name = input("Enter the name of the dungeon: ") 
+dungeon_difficulty = input("Enter the difficulty of the dungeon (Easy, Normal, Hard): ").lower().strip()
+if dungeon_difficulty == "easy":
+    min_monsters = 1
+    max_monsters = 5
+elif dungeon_difficulty == "normal":
+    min_monsters = 3
+    max_monsters = 10
+elif dungeon_difficulty == "hard":
+    min_monsters = 5
+    max_monsters = 20
+else:
+    print("Invalid input. Defaulting to Normal difficulty.")
+    dungeon_difficulty = "normal"
 
 room_choice = input("Would you like to choose the number of rooms? (y/n): ").lower().strip()#Need to figure out how to keep the code from malfunctioning when a user inputs incorrectly.
 if room_choice == "y":
@@ -64,12 +77,12 @@ if monster_max == "y":
             print("Invalid input. Please enter a valid number.")
 else:
     max_monsters = 10
+
 monster_min = input("Would you like to choose the minimum number of monsters per room? (y/n): ").lower().strip()
 if monster_min == "y":
     while True:
         try:
             min_monsters = int(input("Enter the minimum number of monsters per room (1-100): "))
-            print(f"DEBUG: Minimum = {min_monsters}, Maximum = {max_monsters}")  # Debugging line
             if min_monsters < 1 or min_monsters > 100:
                 print("Invalid number. Please enter a number between 1 and 100")
             elif min_monsters > max_monsters:
@@ -85,7 +98,26 @@ if monster_min == "y":
 else:
     min_monsters = 1
 
-treasure_types = ["Gold Coins", "Platinum Coins", "Ruby", "Greatsword", "Emerald"] 
+treasure_choice = input("Would you like to choose the types of treasure? (y/n): ").lower().strip()
+if treasure_choice == "y":
+    treasure_types = []
+    while True:
+        treasure = input("Enter a treasure type (or type 'done' to finish): ").strip()
+        if treasure.lower() == "done":
+            break
+        elif treasure == "":
+            print("Treasure type cannot be empty. Please enter a valid treasure type.")
+        else:
+            treasure_types.append(treasure)
+    if not treasure_types:
+        print("No treasures entered. Using default treasure types.")
+        treasure_types = ["Gold Coins", "Platinum Coins", "Ruby", "Greatsword", "Emerald"]
+elif treasure_choice == "n":
+    treasure_types = ["Gold Coins", "Platinum Coins", "Ruby", "Greatsword", "Emerald"]
+
+else:
+    print("Invalid input. Using default treasure types.")
+    treasure_types = ["Gold Coins", "Platinum Coins", "Ruby", "Greatsword", "Emerald"]
 
 print(f"Welcome to {dungeon_name}") 
 
