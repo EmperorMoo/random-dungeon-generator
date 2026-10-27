@@ -75,7 +75,7 @@ if monster_max == "y":
         except ValueError:
             print("Invalid input. Please enter a valid number.")
 else:
-    max_monsters = 10
+    max_monsters = 5
 
 monster_min = input("Would you like to choose the minimum number of monsters per room? (y/n): ").lower().strip()
 if monster_min == "y":
@@ -120,7 +120,49 @@ else:
 
 print(f"Welcome to {dungeon_name}") 
 
- 
+treasure_max_choice = input("Would you like to choose the maximum number of treasures per room? (y/n): ").lower().strip()
+
+if treasure_max_choice == "y":
+    while True:
+        try:
+            max_treasure = int(input("Enter the maximum number of treasures per room (1-10): "))
+
+            if max_treasure < 1 or max_treasure > 10:
+                print("Invalid number. Please enter a number between 1 and 10")
+            else:
+                print(f"Maximum number of treasures set to {max_treasure}.")
+                break
+
+        except ValueError:
+            print("Invalid input. Please enter a valid number.")
+else:
+    max_treasure = 3
+
+treasure_min_choice = input("Would you like to choose the minimum number of treasures per room? (y/n): ").lower().strip()
+
+if treasure_min_choice == "y":
+    while True:
+        try:
+            min_treasure = int(input("Enter the minimum number of treasures per room (1-10): "))
+            if min_treasure < 1 or min_treasure > 10:
+                print("Invalid number. Please enter a number between 1 and 10")
+            elif min_treasure > max_treasure:
+                print("Minimum number of treasures cannot be greater than the maximum number of treasures.")
+                print(f"Your maximum is currently set to {max_treasure}. Please enter a valid minimum number.")
+                continue
+            else:
+                print(f"Minimum number of treasures set to {min_treasure}.")
+                break
+
+        except ValueError:
+            print("Invalid input. Please enter a valid number.")
+else:
+    min_treasure = 1
+
+
+
+
+
 
 for room in range(1, rooms + 1): #Have to figure out how loops work. I fixed it with indents!
 
@@ -143,14 +185,19 @@ for room in range(1, rooms + 1): #Have to figure out how loops work. I fixed it 
 
     #Room generation
     if room_type <= monster_limit:
-        monsters = random.randint(min_monsters, max_monsters)
+        monsters = random.randint(min_monsters, max_monsters) #Too many monsters breaks the generation of the dungeon. Need to either make a smaller min and max or figure out how to just make the code not crash with so many monsters.
+       #print(f"DEBUG: Minimum = {min_monsters}, Maximum ={max_monsters}")
+       #print(f"DEBUG: Monsters to generate = {monsters}")
         for monster in range(1, monsters + 1):
             encounter = random.choice(monster_types)
             print(f"Monster {monster}: {encounter}")
             
     elif room_type <= treasure_limit:
+        treasure_count = random.randint(min_treasure, max_treasure)
+        for treasure in range(1, treasure_count + 1):
+
             loot = random.choice(treasure_types)
-            print(f"You find a {loot}")
+            print(f"You find {loot}")
     else:
             print("The room is empty.")
    
