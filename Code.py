@@ -7,16 +7,15 @@ import random
 min_monsters = 1
 
 dungeon_name = input("Enter the name of the dungeon: ") 
+
 dungeon_difficulty = input("Enter the difficulty of the dungeon (Easy, Normal, Hard): ").lower().strip()
+
 if dungeon_difficulty == "easy":
-    min_monsters = 1
-    max_monsters = 5
+    print("Difficulty set to Easy.")
 elif dungeon_difficulty == "normal":
-    min_monsters = 3
-    max_monsters = 10
+    print("Difficulty set to Normal.")
 elif dungeon_difficulty == "hard":
-    min_monsters = 5
-    max_monsters = 20
+    print("Difficulty set to Hard.")
 else:
     print("Invalid input. Defaulting to Normal difficulty.")
     dungeon_difficulty = "normal"
@@ -125,23 +124,49 @@ print(f"Welcome to {dungeon_name}")
 
 for room in range(1, rooms + 1): #Have to figure out how loops work. I fixed it with indents!
 
+    print(f"Room {room}")
 
-  
+    room_type = random.randint(1, 6) #Difficulty of the dungeon will affect the number of rooms and the types of monsters and treasure.
+
+   #Set difficulty limits.
+    if dungeon_difficulty == "easy":
+        monster_limit = 2
+        treasure_limit = 4
+    elif dungeon_difficulty == "normal":
+        monster_limit = 3
+        treasure_limit = 5
+    elif dungeon_difficulty == "hard":
+        monster_limit = 4
+        treasure_limit = 6
 
 
 
-    print(f"Room {room}") 
-    room_type = random.randint(1, 3)
-    if room_type == 1:
+    #Room generation
+    if room_type <= monster_limit:
         monsters = random.randint(min_monsters, max_monsters)
         for monster in range(1, monsters + 1):
-            encounter = random.choice(monster_types) 
+            encounter = random.choice(monster_types)
             print(f"Monster {monster}: {encounter}")
-    elif room_type == 2:
-        loot = random.choice(treasure_types) 
-        print(f"You find a {loot}") 
+            
+    elif room_type <= treasure_limit:
+            loot = random.choice(treasure_types)
+            print(f"You find a {loot}")
     else:
-        print("The room is empty.")        
+            print("The room is empty.")
+   
+   
+   #print(f"Room {room}") 
+   #room_type = random.randint(1, 6) #Difficulty of the dungeon will affect the number of rooms and the types of monsters and treasure.
+   #if room_type == 1:
+   #    monsters = random.randint(min_monsters, max_monsters)
+   #   for monster in range(1, monsters + 1):
+   #        encounter = random.choice(monster_types) 
+   #        print(f"Monster {monster}: {encounter}")
+   #elif room_type == 2:
+   #    loot = random.choice(treasure_types) 
+   #    print(f"You find a {loot}") 
+   #else:
+   #    print("The room is empty.")        
 
 
 
