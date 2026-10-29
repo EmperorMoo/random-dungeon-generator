@@ -217,6 +217,9 @@ for room in range(1, rooms + 1): #Have to figure out how loops work. I fixed it 
 
 
 
-
-
-
+#Three hours...Gone. Just. Like. That.
+#I am cursed. :(
+#FHTDFBKJDGUDF KDF 
+#I did three hours but hackatime didn't sync properly. I am sad. I am very sad. I am very very sad. I am very very very sad. I am very very very very sad. I am very very very very very sad. I am very very very very very very sad. I am very very very very very very very sad. I am very very very very very very very very sad. I am very very very very very very very very sad. I am very very very sad. I am very very very very very very very very sad. I am very very very very very very very very very sad. I am very very very very very very very very sad. I am very very very very very very very very sad. I am very very very very very very very very sad. I am very very very very very very very very sad. I am very very very very very very very very very very sad. I am very very very very very very very very sad
+#I'm low-key cooked.
+#I'ma stab hackatime. Respectfully.
