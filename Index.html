@@ -42,6 +42,7 @@
         <label for="treasure_type">Treasure Type:</label>
         <input type="text" id="treasure_type" placeholder="Enter Treasure Type">
     </div>
+    <div>
         <label for="max_treasure">Maximum Treasure per Room:</label>
         <input type="number" id="max_treasure" min="1" max="10" placeholder="#">
     </div>
@@ -52,7 +53,16 @@
     <div>
         <button id="generate_button">Generate Dungeon</button>
     </div>
-    </body>
+    <div>
+        <script>
+            document.getElementById("generate_button").addEventListener("click", function() {
+                alert("Generating dungeon...");
+            });
+        </script>
+                 
+    </div>     
+
+    
 </body>
 </html>
 

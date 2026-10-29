@@ -10,11 +10,11 @@ dungeon_name = input("Enter the name of the dungeon: ")
 
 dungeon_difficulty = input("Enter the difficulty of the dungeon (Easy, Normal, Hard): ").lower().strip()
 
-if dungeon_difficulty == "easy":
+if dungeon_difficulty in ["easy", "e"]:
     print("Difficulty set to Easy.")
-elif dungeon_difficulty == "normal":
+elif dungeon_difficulty in ["normal", "n"]:
     print("Difficulty set to Normal.")
-elif dungeon_difficulty == "hard":
+elif dungeon_difficulty in ["hard", "h"]:
     print("Difficulty set to Hard.")
 else:
     print("Invalid input. Defaulting to Normal difficulty.")
