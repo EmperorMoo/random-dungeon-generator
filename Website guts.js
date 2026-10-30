@@ -17,6 +17,9 @@ document.getElementById("generate_button").addEventListener("click", function() 
     let min_monsters_input = document.getElementById("min_monsters").value;
     let max_treasures_input = document.getElementById("max_treasures").value;
     let min_treasures_input = document.getElementById("min_treasures").value;
+    let monster_type_input = document.getElementById("monster_type").value;
+    let monster_type = monster_type_input.split("\n");
+    
 
     let max_monsters;
     let min_monsters;
@@ -106,6 +109,7 @@ alert("Generating dungeon..." + dungeon_name
     + "\nMin Monsters: " + min_monsters 
     + "\nMax Treasures: " + max_treasures
     + "\nMin Treasures: " + min_treasures
+    + "\nMonster Types: " + monster_type
 );
         
 });
