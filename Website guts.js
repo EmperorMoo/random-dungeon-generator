@@ -18,8 +18,20 @@ document.getElementById("generate_button").addEventListener("click", function() 
     let max_treasures_input = document.getElementById("max_treasures").value;
     let min_treasures_input = document.getElementById("min_treasures").value;
     let monster_type_input = document.getElementById("monster_type").value;
-    let monster_type = monster_type_input.split("\n");
-    
+    let treaure_type_input = document.getElementById("treasure_type").value;
+
+
+    let monster_types = monster_type_input.split("\n");
+        monster_types = monster_types.map(type => type.trim()).filter(type => type !== "");
+    if (monster_types.length === 0) {
+        monster_types = ["Goblin", "Orc", "Skeleton", "Kobold", "Zombie", "Wolf", "Gremlin"];
+    }
+
+    let treasure_types = treasure_type_input.split("\n");
+        treasure_types = treasure_types.map(type => type.trim()).filter(type => type !== "");
+    if (treasure_types.length === 0) {
+        treasure_types = ["Gold Coins", "Platinum Coins", "Ruby", "Greatsword", "Emerald"];
+    }
 
     let max_monsters;
     let min_monsters;
@@ -109,7 +121,7 @@ alert("Generating dungeon..." + dungeon_name
     + "\nMin Monsters: " + min_monsters 
     + "\nMax Treasures: " + max_treasures
     + "\nMin Treasures: " + min_treasures
-    + "\nMonster Types: " + monster_type
+    + "\nMonster Types: " + monster_types.join(", ")
 );
         
 });
