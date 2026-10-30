@@ -19,31 +19,45 @@ document.getElementById("generate_button").addEventListener("click", function() 
     let min_treasures_input = document.getElementById("min_treasures").value;
 
     let max_monsters;
-        if (max_monsters_input === "") {
-        max_monsters = Math.floor(Math.random() * 10) + 1; // Random number between 1 and 10 if a number is not provided
-    }
-        else {
-            max_monsters = Number (max_monsters_input);
-        }
     let min_monsters;
-        if (min_monsters_input === "") {
-        min_monsters = Math.floor(Math.random() * max_monsters) + 1; //Uses whatever is decided on for max_monsters to multiply the randomly chosen decimal and rounds to the nearest integer
-    }
-        else
-            min_monsters = Number (min_monsters_input)
-    let max_treasures;
-        if (max_treasures_input === "") {
-            max_treasures = Math.floor(Math.random() * 10) + 1;
-        }
-        else
-            max_treasures = Number(max_treasures_input)
-    let min_treasures 
-        if (min_treasures_input === "") {
-            min_treasures = Math.floor(Math.random() * max_treasures) + 1;
-        }
-        else
-            min_treasures = Number(min_treasures_input)
 
+        if(max_monsters_input === "" && min_monsters_input === "") {
+        max_monsters = Math.floor(Math.random() * 10) + 1;
+        min_monsters = Math.floor(Math.random() * max_monsters) + 1;
+        }
+        else if (max_monsters_input === "") {
+        min_monsters = Number(min_monsters_input);
+        max_monsters = Math.floor(Math.random() * (101 - min_monsters)) + min_monsters;
+        }
+        else if (min_monsters_input === "") {
+        max_monsters = Number(max_monsters_input);
+        min_monsters = Math.floor(Math.random() * max_monsters) + 1;
+        }
+        else {
+        max_monsters = Number(max_monsters_input);
+        min_monsters = Number(min_monsters_input);
+        }
+    
+    let min_treasures
+    let max_treasures
+
+        if (max_treasures_input === "" && min_treasures_input === "") {
+        max_treasures = Math.floor(Math.random() * 10) + 1;
+        min_treasures = Math.floor(Math.random() * max_treasures) + 1;
+        }
+        else if (max_treasures_input === "") {
+        min_treasures = Number(min_treasures_input);
+        max_treasures = Math.floor(Math.random() * (11 - min_treasures)) + min_treasures;
+        }
+        else if (min_treasures_input === "") {
+        max_treasures = Number(max_treasures_input);
+        min_treasures = Math.floor(Math.random() * max_treasures) + 1;
+        }
+        else {
+        max_treasures = Number(max_treasures_input);
+        min_treasures = Number(min_treasures_input);
+        }
+   
     if (dungeon_name === "") {
         alert("Please enter a dungeon name.");
         return;
@@ -69,8 +83,22 @@ document.getElementById("generate_button").addEventListener("click", function() 
         alert("Please select a difficulty level.");   
         return;
      }
-
-
+    if (max_monsters < 1 || max_monsters > 100) {
+        alert("Maximum monsters must be between 1 and 100.");
+        return;
+    }
+    if (min_monsters < 1 || min_monsters > 100) {
+        alert("Minimum monsters must be between 1 and 100.");
+        return;
+    }
+    if (max_treasures < 1 || max_treasures > 10) {
+        alert("Maximum treasures must be between 1 and 10.");
+        return;
+    }
+    if (min_treasures < 1 || min_treasures > 10 ) {
+        alert("Minimum treasures must be between 1 and 10.");
+        return;
+    }
 alert("Generating dungeon..." + dungeon_name 
     + "\nRooms: " + rooms 
     + "\nDifficulty: " + difficulty 
