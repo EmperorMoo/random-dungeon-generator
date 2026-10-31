@@ -168,7 +168,7 @@ for room in range(1, rooms + 1): #Have to figure out how loops work. I fixed it 
 
     print(f"Room {room}")
 
-    room_type = random.randint(1, 6) #Difficulty of the dungeon will affect the number of rooms and the types of monsters and treasure.
+    room_type = random.randint(1, 6) 
 
    #Set difficulty limits.
     if dungeon_difficulty == "easy":

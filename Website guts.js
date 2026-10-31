@@ -26,12 +26,15 @@ document.getElementById("generate_button").addEventListener("click", function() 
     if (monster_types.length === 0) {
         monster_types = ["Goblin", "Orc", "Skeleton", "Kobold", "Zombie", "Wolf", "Gremlin"];
     }
+    
 
     let treasure_types = treasure_type_input.split("\n");
         treasure_types = treasure_types.map(type => type.trim()).filter(type => type !== "");
     if (treasure_types.length === 0) {
         treasure_types = ["Gold Coins", "Platinum Coins", "Ruby", "Greatsword", "Emerald"];
     }
+    let random_treasure_index = Math.floor(Math.random() * treasure_types.length);
+    let random_treasure = treasure_types[random_treasure_index];
 
     let max_monsters;
     let min_monsters;
@@ -53,6 +56,14 @@ document.getElementById("generate_button").addEventListener("click", function() 
         min_monsters = Number(min_monsters_input);
         }
     
+    let monster_count = Math.floor(Math.random() * (max_monsters - min_monsters + 1)) + min_monsters;
+
+    for (let i = 0; i < monster_count; i++) {
+    let random_monster_index = Math.floor(Math.random() * monster_types.length);
+    let random_monster = monster_types[random_monster_index];
+    console.log(random_monster);
+    }
+
     let min_treasures
     let max_treasures
 
@@ -72,7 +83,8 @@ document.getElementById("generate_button").addEventListener("click", function() 
         max_treasures = Number(max_treasures_input);
         min_treasures = Number(min_treasures_input);
         }
-   
+    let treasure_count = Math.floor(Math.random() * (max_treasures - min_treasures + 1)) + min_treasures;
+
     if (dungeon_name === "") {
         alert("Please enter a dungeon name.");
         return;
@@ -117,12 +129,16 @@ document.getElementById("generate_button").addEventListener("click", function() 
 alert("Generating dungeon..." + dungeon_name 
     + "\nRooms: " + rooms 
     + "\nDifficulty: " + difficulty 
-    + "\nMax Monsters: " + max_monsters  
-    + "\nMin Monsters: " + min_monsters 
-    + "\nMax Treasures: " + max_treasures
-    + "\nMin Treasures: " + min_treasures
-    + "\nMonster Types: " + monster_types.join(", ")
-    + "\nTreasure Types: " + treasure_types.join(", ") 
+ // + "\nMax Monsters: " + max_monsters  
+ // + "\nMin Monsters: " + min_monsters 
+ // + "\nMax Treasures: " + max_treasures
+ // + "\nMin Treasures: " + min_treasures
+ // + "\nMonster Types: " + monster_types.join(", ")
+ // + "\nTreasure Types: " + treasure_types.join(", ") 
+ // + "\nRandom Monster: " + random_monster
+    + "\nRandom Treasure: " + random_treasure
+    + "\nMonster Count: " + monster_count
+    + "\nTreasure Count: " + treasure_count
 );
         
 });
