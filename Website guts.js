@@ -65,6 +65,13 @@ document.getElementById("monsterClear").addEventListener("click", function() {
     renderMonsterTypes(); // Re-render the monster types after clearing
 });
 
+document.getElementById("monsterClear").addEventListener("mouseover", function() {
+    this.style.backgroundColor = "#ff0000c0"; // Change to desired hover color
+});
+
+document.getElementById("monsterClear").addEventListener("mouseout", function() {
+    this.style.backgroundColor = ""; // Reset to original color
+});
 
 
 const treasureTypeInput = document.getElementById("treasureType");
@@ -268,6 +275,13 @@ document.getElementById("treasureClear").addEventListener("click", function() {
     renderTreasureTypes(); // Re-render the treasure types after clearing
 });
 
+document.getElementById("treasureClear").addEventListener("mouseover", function() {
+    this.style.backgroundColor = "#ff0000c0"; // Change to desired hover color
+});
+
+document.getElementById("treasureClear").addEventListener("mouseout", function() {
+    this.style.backgroundColor = ""; // Reset to original color
+});
 
 
 function limitRange(input) {
