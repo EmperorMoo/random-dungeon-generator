@@ -26,7 +26,34 @@ const monsterListDisplay = document.getElementById("monsterList");
 
 // simple render function for displaying types of monsters
 function renderMonsterTypes() {
-    monsterListDisplay.textContent = monsterTypes.join(", ");
+
+    // Clear the previous content before updating
+    monsterListDisplay.innerHTML = "";
+    monsterTypes.forEach(monster => {
+        const button = document.createElement("button");
+        button.textContent = monster;
+
+        monsterListDisplay.appendChild(button);
+
+        // lock natural width of button to prevent resizing when text changes on hover
+        const naturalWidth = button.offsetWidth;
+        button.style.width = `${naturalWidth}px`;
+        // add hover effect to each button
+        button.addEventListener("mouseover", function() {
+            button.style.backgroundColor = "#ff0000c0"; // Change to desired hover color
+            button.textContent = "X"; // Change text on hover
+        });
+        button.addEventListener("mouseout", function() {
+            button.style.backgroundColor = ""; // Reset to original color
+            button.textContent = monster; // Reset text on mouse out
+        });
+        // add remove functionality to each button
+        button.addEventListener("click", function() {
+            monsterTypes.splice(monsterTypes.indexOf(monster), 1);
+            renderMonsterTypes();
+        });
+
+    });
     document.getElementById("monsterClear").hidden = monsterTypes.length === 0; // Hide the clear button if there are no monster types
 }
 
@@ -204,7 +231,32 @@ const treasureListDisplay = document.getElementById("treasureList");
 
 // simple render function for displaying types of treasures
 function renderTreasureTypes() {
-    treasureListDisplay.textContent = treasureTypes.join(", ");
+    // Clear the previous content before updating
+    treasureListDisplay.innerHTML = "";
+    treasureTypes.forEach(treasure => {
+        const button = document.createElement("button");
+        button.textContent = treasure;
+
+        treasureListDisplay.appendChild(button);
+
+        //lock natural width of button to prevent resizing when text changes on hover
+        const naturalWidth = button.offsetWidth;
+        button.style.width = `${naturalWidth}px`;
+        // add hover effect to each button
+        button.addEventListener("mouseover", function() {
+            button.style.backgroundColor = "#ff0000c0"; // Change to desired hover color
+            button.textContent = "X"; // Change text on hover
+        });
+        button.addEventListener("mouseout", function() {
+            button.style.backgroundColor = ""; // Reset to original color
+            button.textContent = treasure; // Reset text on mouse out
+        });
+        // add remove functionality to each button
+        button.addEventListener("click", function() {
+            treasureTypes.splice(treasureTypes.indexOf(treasure), 1);
+            renderTreasureTypes();
+        });
+    });
     document.getElementById("treasureClear").hidden = treasureTypes.length === 0; // Hide the clear button if there are no treasure types
 }
 
