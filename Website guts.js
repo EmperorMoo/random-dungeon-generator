@@ -86,6 +86,28 @@ document.getElementById("treasureClear").addEventListener("click", function() {
     renderTreasureTypes(); // Re-render the treasure types after clearing
 });
 
+
+
+function limitRange(input) {
+    let value = input.value.replace(/\D/g, ''); // Remove non-digit characters
+
+    if (value !== "") {
+        let numericValue = parseInt(value, 10);
+        let min = parseInt(input.min, 10);
+        let max = parseInt(input.max, 10);
+
+        if (numericValue > max) {
+            value = String(max);
+        } else if (numericValue < min) {
+            value = String(min);
+        } else {
+            value = String(numericValue); // Set the value to the numeric value if it's within range
+        }
+    }
+    input.value = value; // Update the input field with the validated value
+}
+
+
 // I'll come back to this mess later.
 document.getElementById("generate_button").addEventListener("click", function() {
     let results = document.getElementById("dungeon_results");          
