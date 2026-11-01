@@ -258,12 +258,18 @@ document.getElementById("generateButton").addEventListener("click", function() {
     let dungeonName = document.getElementById("dungeonName").value;
     let roomInput = document.getElementById("roomNumber").value;
     let difficulty = document.getElementById("difficulty").value;   
-    let rooms = Number(roomInput);
     let maxMonstersInput = document.getElementById("maxMonsters").value;
     let minMonstersInput = document.getElementById("minMonsters").value;
     let maxTreasuresInput = document.getElementById("maxTreasures").value;
     let minTreasuresInput = document.getElementById("minTreasures").value;
 
+    let rooms;
+    if (roomInput === "") {
+        rooms = Math.floor(Math.random() * 6) + 3;
+    }
+    else {
+        rooms= Number(roomInput);
+    }
 
 
     //Max and min monster user choice or random generation
@@ -357,10 +363,6 @@ document.getElementById("generateButton").addEventListener("click", function() {
     if (dungeonName.trim() === "") {
         dungeonName = generateDungeonName();
     } 
-    if (roomInput === "") {
-        alert("Please enter the number of rooms.");
-        return;
-    }
     
     if (rooms < 1 || rooms > 20) {
         alert("Please enter a number of rooms between 1 and 20.");
