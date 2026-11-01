@@ -428,6 +428,11 @@ let dungeon_title = document.createElement("h2");
 dungeon_title.textContent = "Welcome to: " + dungeonName;
 results.appendChild(dungeon_title);
 
+let roomCountDisplay = document.createElement("h3");
+roomCountDisplay.textContent = rooms + " Rooms Generated";
+roomCountDisplay.className = "roomCountDisplay";
+results.appendChild(roomCountDisplay);
+
 for (let i = 0; i < dungeonRooms.length; i++) {
     let room = document.createElement("div");
     room.className = "roomCard";

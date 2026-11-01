@@ -65,3 +65,9 @@ h1, h2, p {
     max-width: 500px;
 }
 
+.roomCountDisplay {
+    text-align: center;
+    color: #555555;
+    font-size: 15px;
+    margin: 10px 0 20px;
+}
