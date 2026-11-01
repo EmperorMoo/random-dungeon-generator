@@ -70,6 +70,39 @@ treasureTypeInput.addEventListener("keydown", function(event) {
     }
 });
 
+const dungeonAdjectives = [
+    "Forgotten",
+    "Cursed",
+    "Ancient",
+    "Hollow",
+    "Lost",
+    "Forsaken",
+    "Shadowed",
+    "Sunken"
+];
+
+const dungeonNouns = [
+    "Catacombs",
+    "Citadel",
+    "Abyss",
+    "Tower",
+    "Fortress",
+    "Temple",
+    "Labyrinth",
+    "Dungeon",
+];
+
+function generateDungeonName() {
+    let randomAdjective = dungeonAdjectives[
+        Math.floor(Math.random() * dungeonAdjectives.length)];
+    let randomNoun = dungeonNouns[
+        Math.floor(Math.random() * dungeonNouns.length)];
+    
+        return "The " + randomAdjective + " " + randomNoun;
+}
+
+
+
 const treasureListDisplay = document.getElementById("treasureList");
 
 // simple render function for displaying types of treasures
@@ -212,9 +245,8 @@ document.getElementById("generateButton").addEventListener("click", function() {
 
 
     //All the alerts for if the user does something wrong
-    if (dungeonName === "") {
-        alert("Please enter a dungeon name.");
-        return;
+    if (dungeonName.trim() === "") {
+        dungeonName = generateDungeonName();
     } 
     if (roomInput === "") {
         alert("Please enter the number of rooms.");
