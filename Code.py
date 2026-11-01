@@ -3,7 +3,7 @@ import random
  #Eventually need to allow for selection of variables by user.
  #Ultimate goal is to publish it as a website
 
-
+# test from alt setup!
 min_monsters = 1
 
 dungeon_name = input("Enter the name of the dungeon: ") 
