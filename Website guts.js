@@ -180,22 +180,26 @@ document.getElementById("generateButton").addEventListener("click", function() {
     
         let generatedMonsters = [];
 
-        for (let i = 0; i < monster_count; i++) {
-            let randomMonsterIndex = Math.floor(Math.random() * monsterTypes.length);
-            let randomMonster = monsterTypes[randomMonsterIndex];
+        if (monsterTypes.length > 0) {
+            for (let i = 0; i < monster_count; i++) {
+                let randomMonsterIndex = Math.floor(Math.random() * monsterTypes.length);
+                let randomMonster = monsterTypes[randomMonsterIndex];
 
-            generatedMonsters.push(randomMonster);
+                generatedMonsters.push(randomMonster);
+            }
         }
         
         let treasure_count = Math.floor(Math.random() * (maxTreasures - minTreasures + 1)) + minTreasures;
 
         let generatedTreasures = [];
 
-        for (let i = 0; i < treasure_count; i++) {
-            let randomTreasureIndex = Math.floor(Math.random() * treasureTypes.length);
-            let randomTreasure = treasureTypes[randomTreasureIndex];
+        if (treasureTypes.length > 0) {
+            for (let i = 0; i < treasure_count; i++) {
+                let randomTreasureIndex = Math.floor(Math.random() * treasureTypes.length);
+                let randomTreasure = treasureTypes[randomTreasureIndex];
 
-            generatedTreasures.push(randomTreasure)
+                generatedTreasures.push(randomTreasure)
+            }
         }
         dungeonRooms.push({
             roomNumber: i + 1,
