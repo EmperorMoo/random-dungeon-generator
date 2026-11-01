@@ -8,7 +8,7 @@
 
 
 document.getElementById("generate_button").addEventListener("click", function() {
-              
+    let results = document.getElementById("dungeon_results");          
 
     //Common variables used throughout the program
     let dungeon_name = document.getElementById("dungeon_name").value;
@@ -183,7 +183,7 @@ for (let i = 0; i < dungeon_rooms.length; i++) {
 }
 
 // Where everything is displayed. Includes the old displays that I combined and or replaced in case I ever need to look at and debug them specifically.
-alert("Generating dungeon..." + dungeon_name 
+alert("Welcome to: " + dungeon_name 
     + "\nRooms: " + rooms 
     + "\nDifficulty: " + difficulty 
  // + "\nMax Monsters: " + max_monsters  
@@ -201,7 +201,58 @@ alert("Generating dungeon..." + dungeon_name
  // + "\nGenerated Rooms: " + rooms
     + "\n\nDungeon Rooms: " + dungeon_display
 );
-        
+      
+
+results.replaceChildren();
+
+let dungeon_title = document.createElement("h2");
+dungeon_title.textContent = "Welcome to: " + dungeon_name;
+results.appendChild(dungeon_title);
+
+for (let i = 0; i < dungeon_rooms.length; i++) {
+    let room = document.createElement("div");
+    room.className = "room_card";
+
+    let room_title = document.createElement("h3");
+    room_title.textContent = "Room " + dungeon_rooms[i].room_number;
+
+    let monsters = document.createElement("p");
+    monsters.textContext = "Monsters:";
+    
+    room.appendChild(monsters);
+
+    let monster_counts = {};
+
+    for (let j = 0; j < dungeon_rooms[i].monsters.length; j++) {
+        let monster = dungeon_rooms[i].monsters[j];
+
+        if (monster_counts[monster] === undefined) {
+            monster_counts[monster] = 1;
+        }
+        else {
+            monster_counts[monster]++;
+        }
+    }
+
+    for (let monster in monster_counts) {
+        let monster_line = document.createElement("p");
+        monster_line.textContent = monster + " x " + monster_counts[monster];
+
+        room.appendChild(monster_line);
+    }
+    //let monsters = document.createElement("p");
+    //monsters.textContent = "Monsters: " + dungeon_rooms[i].monsters.join(', ');
+
+    let treasures = document.createElement("p");
+    treasures.textContent = "Treasures: " + dungeon_rooms[i].treasures.join(", ");
+
+    room.appendChild(room_title);
+    room.appendChild(monsters);
+    room.appendChild(treasures);
+
+    results.appendChild(room);
+
+}
 });
 
 

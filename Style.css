@@ -1,0 +1,23 @@
+
+
+
+
+
+.room_card {
+
+
+    background-color: #eeeeee;
+    border: 2px solid #444444;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 15px 0;
+}
+
+.room_card h3 {
+    border-bottom: 1px solid #999999;
+    padding-bottom : 8px
+}
+
+.room_card p {
+    overflow-wrap: anywhere
+}
