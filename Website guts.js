@@ -3,18 +3,6 @@
 
 
 
-// Note to self, I NEED TO LEARN TO STICK TO A CASING CONVENTION.
-// Choose either camelCase or snake_case and stick to it.
-// I have been mixing them up and it is making my code look messy and unprofessional.
-// I will probably choose camelCase because it is the most common convention in JavaScript.
-// And it looks better in my opinion.
-// While variable names can be most anything, sticking to a convention will make my code look more professional and easier to read.
-
-// snake_case involves almost all lowercase letters with underscores between words. For example: my_variable_name
-
-// camelCase involves starting with a lowercase letter and capitalizing the first letter of each subsequent word. For example: myVariableName
-
-
 
 const monsterTypeInput = document.getElementById("monsterType");
 const monsterTypes = ["Goblin", "Orc", "Skeleton", "Kobold", "Zombie", "Wolf", "Gremlin"];
