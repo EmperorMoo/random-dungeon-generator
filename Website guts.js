@@ -299,7 +299,7 @@ results.appendChild(dungeon_title);
 
 for (let i = 0; i < dungeonRooms.length; i++) {
     let room = document.createElement("div");
-    room.className = "room_card";
+    room.className = "roomCard";
 
     let room_title = document.createElement("h3");
     room_title.textContent = "Room " + dungeonRooms[i].roomNumber;

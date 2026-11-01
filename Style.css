@@ -3,7 +3,14 @@
 
 
 
-.room_card {
+
+h1, h2, p {
+    text-align: center;
+}
+
+
+
+.roomCard {
 
     background-color: #eeeeee;
     border: 2px solid #444444;
@@ -12,12 +19,13 @@
     margin: 15px 0;
 }
 
-.room_card h3 {
+.roomCard h3 {
     border-bottom: 1px solid #999999;
     padding-bottom : 8px;
+    text-align: center;
 }
 
-.room_card p {
+.roomCard p {
     overflow-wrap: anywhere;
 }
 
@@ -47,3 +55,13 @@
     border: 1px solid #999999;
     border-radius: 15px;
 }
+.settingsContainer {
+    background-color: #eeeeee;
+    color: #222222;
+    border: 1px solid #cccccc;
+    border-radius: 10px;
+    padding: 25px;
+    margin: 20px auto;
+    max-width: 500px;
+}
+
