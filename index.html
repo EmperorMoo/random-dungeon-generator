@@ -1,3 +1,5 @@
+<!-- Again, I need to learn to stick to a case convention. Common for html are kebab-case and camelCase. snake_case is rarely used -->
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,8 +29,10 @@
         </select>
     </div>
     <div>
-        <label for="monster_type">Monster Types:</label>
-        <textarea id="monster_type" placeholder="Enter one monster type per line"></textarea>
+        <label for="monsterType">Monster Types:</label>
+        <input type="text" id="monsterType" placeholder="Add a monster type, press Enter"></input>
+        <p id="monsterList"></p>
+        <button id="monsterClear">Clear</button>
     </div>
     <div>
         <label for="max_monsters">Maximum Monsters per Room:</label>
@@ -40,8 +44,10 @@
         <input type="number" id="min_monsters" min="1" max="100" placeholder="#">
     </div>
     <div>
-        <label for="treasure_type">Treasure Types:</label>
-        <textarea id="treasure_type" placeholder="Enter one treasure type per line"></textarea>
+        <label for="treasureType">Treasure Types:</label>
+        <input type="text" id="treasureType" placeholder="Add a treasure type, press Enter"></input>
+        <p id="treasureList"></p>
+        <button id="treasureClear">Clear</button>
     </div>
     <div>
         <label for="max_treasures">Maximum Treasure per Room:</label>

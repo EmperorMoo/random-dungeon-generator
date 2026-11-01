@@ -3,10 +3,90 @@
 
 
 
+// Note to self, I NEED TO LEARN TO STICK TO A CASING CONVENTION.
+// Choose either camelCase or snake_case and stick to it.
+// I have been mixing them up and it is making my code look messy and unprofessional.
+// I will probably choose camelCase because it is the most common convention in JavaScript.
+// And it looks better in my opinion.
+// While variable names can be most anything, sticking to a convention will make my code look more professional and easier to read.
+
+// snake_case involves almost all lowercase letters with underscores between words. For example: my_variable_name
+
+// camelCase involves starting with a lowercase letter and capitalizing the first letter of each subsequent word. For example: myVariableName
 
 
 
+const monsterTypeInput = document.getElementById("monsterType");
+const monsterTypes = ["Goblin", "Orc", "Skeleton", "Kobold", "Zombie", "Wolf", "Gremlin"];
 
+
+// Adds a new monster type to the monsterTypes array when the user presses Enter in the input field. It also clears the input field and logs the updated monster types to the console.
+monsterTypeInput.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        const newTypes = monsterTypeInput.value.split(",").map(type => type.trim()).filter(type => type !== "");
+        if (newTypes !== undefined && newTypes.length > 0) {
+            monsterTypes.push(...newTypes);
+        }
+        monsterTypeInput.value = "";
+
+        renderMonsterTypes(); // re-render the monster types after adding new ones
+    }
+});
+
+const monsterListDisplay = document.getElementById("monsterList");
+
+// simple render function for displaying types of monsters
+function renderMonsterTypes() {
+    monsterListDisplay.textContent = monsterTypes.join(", ");
+    document.getElementById("monsterClear").hidden = monsterTypes.length === 0; // Hide the clear button if there are no monster types
+}
+
+//render the monster types on page load
+renderMonsterTypes();
+
+document.getElementById("monsterClear").addEventListener("click", function() {
+    monsterTypes.length = 0; // Clear the array
+    renderMonsterTypes(); // Re-render the monster types after clearing
+});
+
+
+
+const treasureTypeInput = document.getElementById("treasureType");
+const treasureTypes = ["Gold Coins", "Platinum Coins", "Ruby", "Greatsword", "Emerald"];
+
+// Adds a new treasure type to the treasureTypes array when the user presses Enter in the input field. It also clears the input field and logs the updated treasure types to the console.
+treasureTypeInput.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        // local variables are nifty! I can use the same name for 2 different variables in different scopes and they won't interfere. 
+        const newTypes = treasureTypeInput.value.split(",").map(type => type.trim()).filter(type => type !== "");
+        if (newTypes !== undefined && newTypes.length > 0) {
+            treasureTypes.push(...newTypes);
+        }
+        treasureTypeInput.value = "";
+
+        renderTreasureTypes(); // re-render the treasure types after adding new ones
+    }
+});
+
+const treasureListDisplay = document.getElementById("treasureList");
+
+// simple render function for displaying types of treasures
+function renderTreasureTypes() {
+    treasureListDisplay.textContent = treasureTypes.join(", ");
+    document.getElementById("treasureClear").hidden = treasureTypes.length === 0; // Hide the clear button if there are no treasure types
+}
+
+//render the treasure types on page load
+renderTreasureTypes();
+
+document.getElementById("treasureClear").addEventListener("click", function() {
+    treasureTypes.length = 0; // Clear the array
+    renderTreasureTypes(); // Re-render the treasure types after clearing
+});
+
+// I'll come back to this mess later.
 document.getElementById("generate_button").addEventListener("click", function() {
     let results = document.getElementById("dungeon_results");          
 
@@ -19,22 +99,9 @@ document.getElementById("generate_button").addEventListener("click", function() 
     let min_monsters_input = document.getElementById("min_monsters").value;
     let max_treasures_input = document.getElementById("max_treasures").value;
     let min_treasures_input = document.getElementById("min_treasures").value;
-    let monster_type_input = document.getElementById("monster_type").value;
-    let treasure_type_input = document.getElementById("treasure_type").value;
 
 
-
-
-    //Monster and treasure type choice
-    let monster_types = monster_type_input.split("\n");
-        monster_types = monster_types.map(type => type.trim()).filter(type => type !== "");
-    if (monster_types.length === 0) {
-        monster_types = ["Goblin", "Orc", "Skeleton", "Kobold", "Zombie", "Wolf", "Gremlin"];
-    }
-    
-
-    let treasure_types = treasure_type_input.split("\n");
-        treasure_types = treasure_types.map(type => type.trim()).filter(type => type !== "");
+    let treasure_types = treasureTypes;
     if (treasure_types.length === 0) {
         treasure_types = ["Gold Coins", "Platinum Coins", "Ruby", "Greatsword", "Emerald"];
     }
@@ -101,8 +168,8 @@ document.getElementById("generate_button").addEventListener("click", function() 
         let generated_monsters = [];
 
         for (let i = 0; i < monster_count; i++) {
-            let random_monster_index = Math.floor(Math.random() * monster_types.length);
-            let random_monster = monster_types[random_monster_index];
+            let random_monster_index = Math.floor(Math.random() * monsterTypes.length);
+            let random_monster = monsterTypes[random_monster_index];
 
             generated_monsters.push(random_monster);
         }
@@ -112,8 +179,8 @@ document.getElementById("generate_button").addEventListener("click", function() 
         let generated_treasures = [];
 
         for (let i = 0; i < treasure_count; i++) {
-            let random_treasure_index = Math.floor(Math.random() * treasure_types.length);
-            let random_treasure = treasure_types[random_treasure_index];
+            let random_treasure_index = Math.floor(Math.random() * treasureTypes.length);
+            let random_treasure = treasureTypes[random_treasure_index];
 
             generated_treasures.push(random_treasure)
         }
@@ -190,8 +257,8 @@ for (let i = 0; i < dungeon_rooms.length; i++) {
  // + "\nMin Monsters: " + min_monsters 
  // + "\nMax Treasures: " + max_treasures
  // + "\nMin Treasures: " + min_treasures
- // + "\nMonster Types: " + monster_types.join(", ")
- // + "\nTreasure Types: " + treasure_types.join(", ") 
+ // + "\nMonster Types: " + monsterTypes.join(", ")
+ // + "\nTreasure Types: " + treasureTypes.join(", ") 
  // + "\nRandom Monster: " + random_monster
  // + "\nRandom Treasure: " + random_treasure
  // + "\nMonster Count: " + monster_count
