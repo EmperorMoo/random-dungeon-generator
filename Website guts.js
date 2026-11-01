@@ -183,9 +183,9 @@ for (let i = 0; i < dungeon_rooms.length; i++) {
 }
 
 // Where everything is displayed. Includes the old displays that I combined and or replaced in case I ever need to look at and debug them specifically.
-alert("Welcome to: " + dungeon_name 
-    + "\nRooms: " + rooms 
-    + "\nDifficulty: " + difficulty 
+//alert("Welcome to: " + dungeon_name 
+ // + "\nRooms: " + rooms 
+ // + "\nDifficulty: " + difficulty 
  // + "\nMax Monsters: " + max_monsters  
  // + "\nMin Monsters: " + min_monsters 
  // + "\nMax Treasures: " + max_treasures
@@ -199,8 +199,12 @@ alert("Welcome to: " + dungeon_name
  // + "\nGenerated Monsters: " + generated_monsters.join(", ")
  // + "\nGenerated Treasures: " + generated_treasures.join(", ")
  // + "\nGenerated Rooms: " + rooms
-    + "\n\nDungeon Rooms: " + dungeon_display
-);
+ // + "\n\nDungeon Rooms: " + dungeon_display
+//);
+
+
+
+
       
 
 results.replaceChildren();
@@ -216,10 +220,18 @@ for (let i = 0; i < dungeon_rooms.length; i++) {
     let room_title = document.createElement("h3");
     room_title.textContent = "Room " + dungeon_rooms[i].room_number;
 
+
+
+
+
+
+
     let monsters = document.createElement("p");
-    monsters.textContext = "Monsters:";
-    
+    monsters.textContent = "Monsters:";
+
+    room.appendChild(room_title);
     room.appendChild(monsters);
+    
 
     let monster_counts = {};
 
@@ -243,12 +255,37 @@ for (let i = 0; i < dungeon_rooms.length; i++) {
     //let monsters = document.createElement("p");
     //monsters.textContent = "Monsters: " + dungeon_rooms[i].monsters.join(', ');
 
-    let treasures = document.createElement("p");
-    treasures.textContent = "Treasures: " + dungeon_rooms[i].treasures.join(", ");
 
-    room.appendChild(room_title);
-    room.appendChild(monsters);
+
+
+
+
+
+
+    let treasures = document.createElement("p");
+    treasures.textContent = "Treasures: ";
+
     room.appendChild(treasures);
+
+    let treasure_counts = {};
+
+    for (let j = 0; j < dungeon_rooms[i].treasures.length; j++) {
+        let treasure = dungeon_rooms[i].treasures[j];
+
+        if (treasure_counts[treasure] === undefined) {
+            treasure_counts[treasure] = 1;
+        }
+        else {
+            treasure_counts[treasure]++;
+        }
+    }
+    
+    for (let treasure in treasure_counts) {
+        let treasure_line = document.createElement("p");
+        treasure_line.textContent = treasure + " x " + treasure_counts[treasure];
+
+        room.appendChild(treasure_line);
+    }
 
     results.appendChild(room);
 
