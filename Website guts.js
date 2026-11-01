@@ -109,107 +109,98 @@ function limitRange(input) {
 
 
 // I'll come back to this mess later.
-document.getElementById("generate_button").addEventListener("click", function() {
+document.getElementById("generateButton").addEventListener("click", function() {
     let results = document.getElementById("dungeon_results");          
 
     //Common variables used throughout the program
-    let dungeon_name = document.getElementById("dungeon_name").value;
-    let room_input = document.getElementById("room_number").value;
+    let dungeonName = document.getElementById("dungeonName").value;
+    let roomInput = document.getElementById("roomNumber").value;
     let difficulty = document.getElementById("difficulty").value;   
-    let rooms = Number(room_input);
-    let max_monsters_input = document.getElementById("max_monsters").value;
-    let min_monsters_input = document.getElementById("min_monsters").value;
-    let max_treasures_input = document.getElementById("max_treasures").value;
-    let min_treasures_input = document.getElementById("min_treasures").value;
-
-
-    let treasure_types = treasureTypes;
-    if (treasure_types.length === 0) {
-        treasure_types = ["Gold Coins", "Platinum Coins", "Ruby", "Greatsword", "Emerald"];
-    }
-    let random_treasure_index = Math.floor(Math.random() * treasure_types.length);
-    let random_treasure = treasure_types[random_treasure_index];
-
+    let rooms = Number(roomInput);
+    let maxMonstersInput = document.getElementById("maxMonsters").value;
+    let minMonstersInput = document.getElementById("minMonsters").value;
+    let maxTreasuresInput = document.getElementById("maxTreasures").value;
+    let minTreasuresInput = document.getElementById("minTreasures").value;
 
 
 
     //Max and min monster user choice or random generation
-    let max_monsters;
-    let min_monsters;
+    let maxMonsters;
+    let minMonsters;
 
-        if(max_monsters_input === "" && min_monsters_input === "") {
-        max_monsters = Math.floor(Math.random() * 10) + 1;
-        min_monsters = Math.floor(Math.random() * max_monsters) + 1;
+        if(maxMonstersInput === "" && minMonstersInput === "") {
+        maxMonsters = Math.floor(Math.random() * 10) + 1;
+        minMonsters = Math.floor(Math.random() * maxMonsters) + 1;
         }
-        else if (max_monsters_input === "") {
-        min_monsters = Number(min_monsters_input);
-        max_monsters = Math.floor(Math.random() * (101 - min_monsters)) + min_monsters;
+        else if (maxMonstersInput === "") {
+        minMonsters = Number(minMonstersInput);
+        maxMonsters = Math.floor(Math.random() * (101 - minMonsters)) + minMonsters;
         }
-        else if (min_monsters_input === "") {
-        max_monsters = Number(max_monsters_input);
-        min_monsters = Math.floor(Math.random() * max_monsters) + 1;
+        else if (minMonstersInput === "") {
+        maxMonsters = Number(maxMonstersInput);
+        minMonsters = Math.floor(Math.random() * maxMonsters) + 1;
         }
         else {
-        max_monsters = Number(max_monsters_input);
-        min_monsters = Number(min_monsters_input);
+        maxMonsters = Number(maxMonstersInput);
+        minMonsters = Number(minMonstersInput);
         }
     
 
 
 
     //Max and min treasure user choice or random generation
-    let min_treasures
-    let max_treasures
+    let minTreasures
+    let maxTreasures
 
-        if (max_treasures_input === "" && min_treasures_input === "") {
-        max_treasures = Math.floor(Math.random() * 10) + 1;
-        min_treasures = Math.floor(Math.random() * max_treasures) + 1;
+        if (maxTreasuresInput === "" && minTreasuresInput === "") {
+        maxTreasures = Math.floor(Math.random() * 10) + 1;
+        minTreasures = Math.floor(Math.random() * maxTreasures) + 1;
         }
-        else if (max_treasures_input === "") {
-        min_treasures = Number(min_treasures_input);
-        max_treasures = Math.floor(Math.random() * (11 - min_treasures)) + min_treasures;
+        else if (maxTreasuresInput === "") {
+        minTreasures = Number(minTreasuresInput);
+        maxTreasures = Math.floor(Math.random() * (11 - minTreasures)) + minTreasures;
         }
-        else if (min_treasures_input === "") {
-        max_treasures = Number(max_treasures_input);
-        min_treasures = Math.floor(Math.random() * max_treasures) + 1;
+        else if (minTreasuresInput === "") {
+        maxTreasures = Number(maxTreasuresInput);
+        minTreasures = Math.floor(Math.random() * maxTreasures) + 1;
         }
         else {
-        max_treasures = Number(max_treasures_input);
-        min_treasures = Number(min_treasures_input);
+        maxTreasures = Number(maxTreasuresInput);
+        minTreasures = Number(minTreasuresInput);
         }
 
 
 
 
     //Dungeon room generation code.
-    let dungeon_rooms = [];
+    let dungeonRooms = [];
 
     for (let i = 0; i < rooms; i++) {
-        let monster_count = Math.floor(Math.random() * (max_monsters - min_monsters + 1)) + min_monsters;
+        let monster_count = Math.floor(Math.random() * (maxMonsters - minMonsters + 1)) + minMonsters;
     
-        let generated_monsters = [];
+        let generatedMonsters = [];
 
         for (let i = 0; i < monster_count; i++) {
-            let random_monster_index = Math.floor(Math.random() * monsterTypes.length);
-            let random_monster = monsterTypes[random_monster_index];
+            let randomMonsterIndex = Math.floor(Math.random() * monsterTypes.length);
+            let randomMonster = monsterTypes[randomMonsterIndex];
 
-            generated_monsters.push(random_monster);
+            generatedMonsters.push(randomMonster);
         }
         
-        let treasure_count = Math.floor(Math.random() * (max_treasures - min_treasures + 1)) + min_treasures;
+        let treasure_count = Math.floor(Math.random() * (maxTreasures - minTreasures + 1)) + minTreasures;
 
-        let generated_treasures = [];
+        let generatedTreasures = [];
 
         for (let i = 0; i < treasure_count; i++) {
-            let random_treasure_index = Math.floor(Math.random() * treasureTypes.length);
-            let random_treasure = treasureTypes[random_treasure_index];
+            let randomTreasureIndex = Math.floor(Math.random() * treasureTypes.length);
+            let randomTreasure = treasureTypes[randomTreasureIndex];
 
-            generated_treasures.push(random_treasure)
+            generatedTreasures.push(randomTreasure)
         }
-        dungeon_rooms.push({
-            room_number: i + 1,
-            monsters: generated_monsters,
-            treasures: generated_treasures
+        dungeonRooms.push({
+            roomNumber: i + 1,
+            monsters: generatedMonsters,
+            treasures: generatedTreasures
         });
     }
 
@@ -217,11 +208,11 @@ document.getElementById("generate_button").addEventListener("click", function() 
 
 
     //All the alerts for if the user does something wrong
-    if (dungeon_name === "") {
+    if (dungeonName === "") {
         alert("Please enter a dungeon name.");
         return;
     } 
-    if (room_input === "") {
+    if (roomInput === "") {
         alert("Please enter the number of rooms.");
         return;
     }
@@ -230,11 +221,11 @@ document.getElementById("generate_button").addEventListener("click", function() 
         alert("Please enter a number of rooms between 1 and 20.");
         return;
     }
-    if (min_monsters > max_monsters) {
+    if (minMonsters > maxMonsters) {
         alert("Minimum monsters cannot be greater than maximum monsters.");
         return;
     }
-    if (min_treasures > max_treasures) {
+    if (minTreasures > maxTreasures) {
         alert("Minimum treasures cannot be greater than maximum treasures.")
         return;
     }
@@ -242,19 +233,19 @@ document.getElementById("generate_button").addEventListener("click", function() 
         alert("Please select a difficulty level.");   
         return;
      }
-    if (max_monsters < 1 || max_monsters > 100) {
+    if (maxMonsters < 1 || maxMonsters > 100) {
         alert("Maximum monsters must be between 1 and 100.");
         return;
     }
-    if (min_monsters < 1 || min_monsters > 100) {
+    if (minMonsters < 1 || minMonsters > 100) {
         alert("Minimum monsters must be between 1 and 100.");
         return;
     }
-    if (max_treasures < 1 || max_treasures > 10) {
+    if (maxTreasures < 1 || maxTreasures > 10) {
         alert("Maximum treasures must be between 1 and 10.");
         return;
     }
-    if (min_treasures < 1 || min_treasures > 10 ) {
+    if (minTreasures < 1 || minTreasures > 10 ) {
         alert("Minimum treasures must be between 1 and 10.");
         return;
     }
@@ -263,32 +254,32 @@ document.getElementById("generate_button").addEventListener("click", function() 
 
 
 //Makes sure each room displays what it should
-let dungeon_display = "";
+let dungeonDisplay = "";
 
-for (let i = 0; i < dungeon_rooms.length; i++) {
-    dungeon_display += "\nRoom: " + dungeon_rooms[i].room_number;
-    dungeon_display += "\nMonsters: " + dungeon_rooms[i].monsters.join(", ");
-    dungeon_display += "\nTreasures: " + dungeon_rooms[i].treasures.join(", ");
+for (let i = 0; i < dungeonRooms.length; i++) {
+    dungeonDisplay += "\nRoom: " + dungeonRooms[i].roomNumber;
+    dungeonDisplay += "\nMonsters: " + dungeonRooms[i].monsters.join(", ");
+    dungeonDisplay += "\nTreasures: " + dungeonRooms[i].treasures.join(", ");
 }
 
 // Where everything is displayed. Includes the old displays that I combined and or replaced in case I ever need to look at and debug them specifically.
-//alert("Welcome to: " + dungeon_name 
+//alert("Welcome to: " + dungeonName 
  // + "\nRooms: " + rooms 
  // + "\nDifficulty: " + difficulty 
- // + "\nMax Monsters: " + max_monsters  
- // + "\nMin Monsters: " + min_monsters 
- // + "\nMax Treasures: " + max_treasures
- // + "\nMin Treasures: " + min_treasures
+ // + "\nMax Monsters: " + maxMonsters  
+ // + "\nMin Monsters: " + minMonsters 
+ // + "\nMax Treasures: " + maxTreasures
+ // + "\nMin Treasures: " + minTreasures
  // + "\nMonster Types: " + monsterTypes.join(", ")
  // + "\nTreasure Types: " + treasureTypes.join(", ") 
- // + "\nRandom Monster: " + random_monster
+ // + "\nRandom Monster: " + randomMonster
  // + "\nRandom Treasure: " + random_treasure
  // + "\nMonster Count: " + monster_count
  // + "\nTreasure Count: " + treasure_count
- // + "\nGenerated Monsters: " + generated_monsters.join(", ")
- // + "\nGenerated Treasures: " + generated_treasures.join(", ")
+ // + "\nGenerated Monsters: " + generatedMonsters.join(", ")
+ // + "\nGenerated Treasures: " + generatedTreasures.join(", ")
  // + "\nGenerated Rooms: " + rooms
- // + "\n\nDungeon Rooms: " + dungeon_display
+ // + "\n\nDungeon Rooms: " + dungeonDisplay
 //);
 
 
@@ -299,15 +290,15 @@ for (let i = 0; i < dungeon_rooms.length; i++) {
 results.replaceChildren();
 
 let dungeon_title = document.createElement("h2");
-dungeon_title.textContent = "Welcome to: " + dungeon_name;
+dungeon_title.textContent = "Welcome to: " + dungeonName;
 results.appendChild(dungeon_title);
 
-for (let i = 0; i < dungeon_rooms.length; i++) {
+for (let i = 0; i < dungeonRooms.length; i++) {
     let room = document.createElement("div");
     room.className = "room_card";
 
     let room_title = document.createElement("h3");
-    room_title.textContent = "Room " + dungeon_rooms[i].room_number;
+    room_title.textContent = "Room " + dungeonRooms[i].roomNumber;
 
 
 
@@ -322,27 +313,27 @@ for (let i = 0; i < dungeon_rooms.length; i++) {
     room.appendChild(monsters);
     
 
-    let monster_counts = {};
+    let monsterCounts = {};
 
-    for (let j = 0; j < dungeon_rooms[i].monsters.length; j++) {
-        let monster = dungeon_rooms[i].monsters[j];
+    for (let j = 0; j < dungeonRooms[i].monsters.length; j++) {
+        let monster = dungeonRooms[i].monsters[j];
 
-        if (monster_counts[monster] === undefined) {
-            monster_counts[monster] = 1;
+        if (monsterCounts[monster] === undefined) {
+            monsterCounts[monster] = 1;
         }
         else {
-            monster_counts[monster]++;
+            monsterCounts[monster]++;
         }
     }
 
-    for (let monster in monster_counts) {
-        let monster_line = document.createElement("p");
-        monster_line.textContent = monster + " x " + monster_counts[monster];
+    for (let monster in monsterCounts) {
+        let monsterLine = document.createElement("p");
+        monsterLine.textContent = monster + " x " + monsterCounts[monster];
 
-        room.appendChild(monster_line);
+        room.appendChild(monsterLine);
     }
     //let monsters = document.createElement("p");
-    //monsters.textContent = "Monsters: " + dungeon_rooms[i].monsters.join(', ');
+    //monsters.textContent = "Monsters: " + dungeonRooms[i].monsters.join(', ');
 
 
 
@@ -356,24 +347,24 @@ for (let i = 0; i < dungeon_rooms.length; i++) {
 
     room.appendChild(treasures);
 
-    let treasure_counts = {};
+    let treasureCounts = {};
 
-    for (let j = 0; j < dungeon_rooms[i].treasures.length; j++) {
-        let treasure = dungeon_rooms[i].treasures[j];
+    for (let j = 0; j < dungeonRooms[i].treasures.length; j++) {
+        let treasure = dungeonRooms[i].treasures[j];
 
-        if (treasure_counts[treasure] === undefined) {
-            treasure_counts[treasure] = 1;
+        if (treasureCounts[treasure] === undefined) {
+            treasureCounts[treasure] = 1;
         }
         else {
-            treasure_counts[treasure]++;
+            treasureCounts[treasure]++;
         }
     }
     
-    for (let treasure in treasure_counts) {
-        let treasure_line = document.createElement("p");
-        treasure_line.textContent = treasure + " x " + treasure_counts[treasure];
+    for (let treasure in treasureCounts) {
+        let treasureLine = document.createElement("p");
+        treasureLine.textContent = treasure + " x " + treasureCounts[treasure];
 
-        room.appendChild(treasure_line);
+        room.appendChild(treasureLine);
     }
 
     results.appendChild(room);
