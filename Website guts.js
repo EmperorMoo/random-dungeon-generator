@@ -106,7 +106,7 @@ const dungeonAdjectives = [
     "Dark",
     "Blighted",
     "Forbidden",
-    "Eterenal",
+    "Eternal",
     "Whispering",
     "Silent",
     "Ruined",
@@ -205,7 +205,7 @@ const dungeonNouns = [
     "Empire",
     "Throne",
     "Arena",
-    "Colluseum",
+    "Colosseum",
     "Basilica",
     "Monument",
     "Pyramid",
@@ -336,7 +336,7 @@ document.getElementById("generateButton").addEventListener("click", function() {
         }
         else if (maxMonstersInput === "") {
         minMonsters = Number(minMonstersInput);
-        maxMonsters = Math.floor(Math.random() * (101 - minMonsters)) + minMonsters;
+        maxMonsters = Math.floor(Math.random() * (11 - minMonsters)) + minMonsters;
         }
         else if (minMonstersInput === "") {
         maxMonsters = Number(maxMonstersInput);
@@ -346,7 +346,34 @@ document.getElementById("generateButton").addEventListener("click", function() {
         maxMonsters = Number(maxMonstersInput);
         minMonsters = Number(minMonstersInput);
         }
+
+
+
+
     
+    //Adjust randomly generated monster counts based on difficulty
+    let monsterMultiplier = 1;
+    
+    if (difficulty === "easy") {
+        monsterMultiplier = 0.5;
+    }
+
+    else if (difficulty === "hard") {
+        monsterMultiplier = 1.5;
+    }
+
+    //Only scale values the user left blank
+    if (minMonstersInput === "") {
+        minMonsters = Math.min(100, Math.max(1, Math.round(minMonsters * monsterMultiplier))); 
+    }
+    
+
+    if (maxMonstersInput === "") {
+        maxMonsters = Math.max(minMonsters, Math.round(maxMonsters * monsterMultiplier));
+    }
+    
+
+
 
 
 
