@@ -504,8 +504,12 @@ let dungeonDisplay = "";
 
 for (let i = 0; i < dungeonRooms.length; i++) {
     dungeonDisplay += "\nRoom: " + dungeonRooms[i].roomNumber;
-    dungeonDisplay += "\nMonsters: " + dungeonRooms[i].monsters.join(", ");
-    dungeonDisplay += "\nTreasures: " + dungeonRooms[i].treasures.join(", ");
+    if (dungeonRooms[i].monsters.length > 0) {
+        dungeonDisplay += "\nMonsters: " + dungeonRooms[i].monsters.join(", ");
+    }
+    if (dungeonRooms [i].treasures.length > 0) {
+        dungeonDisplay += "\nTreasures: " + dungeonRooms[i].treasures.join(", ");
+    }
 }
 
 // Where everything is displayed. Includes the old displays that I combined and or replaced in case I ever need to look at and debug them specifically.
@@ -547,13 +551,16 @@ for (let i = 0; i < dungeonRooms.length; i++) {
     let room_title = document.createElement("h3");
     room_title.textContent = "Room " + dungeonRooms[i].roomNumber;
 
-
-
-    let monsters = document.createElement("p");
-    monsters.textContent = "Monsters:";
-
     room.appendChild(room_title);
-    room.appendChild(monsters);
+
+
+
+    if (dungeonRooms [i].monsters.length > 0) {
+        let monsters = document.createElement("p");
+        monsters.textContent = "Monsters:";
+        room.appendChild(monsters);
+    }
+    
     
 
     let monsterCounts = {};
@@ -580,10 +587,12 @@ for (let i = 0; i < dungeonRooms.length; i++) {
 
 
 
-    let treasures = document.createElement("p");
-    treasures.textContent = "Treasures: ";
-
-    room.appendChild(treasures);
+    
+    if (dungeonRooms[i].treasures.length > 0) {
+        let treasures = document.createElement("p");
+        treasures.textContent = "Treasures: ";
+        room.appendChild(treasures);
+    }
 
     let treasureCounts = {};
 
