@@ -1,9 +1,3 @@
-
-
-
-
-
-
 const monsterTypeInput = document.getElementById("monsterType");
 const monsterTypes = ["Goblin", "Orc", "Skeleton", "Kobold", "Zombie", "Wolf", "Gremlin"];
 
@@ -349,8 +343,6 @@ document.getElementById("generateButton").addEventListener("click", function() {
 
 
 
-
-    
     //Adjust randomly generated monster counts based on difficulty
     let monsterMultiplier = 1;
     
@@ -366,14 +358,11 @@ document.getElementById("generateButton").addEventListener("click", function() {
     if (minMonstersInput === "") {
         minMonsters = Math.min(100, Math.max(1, Math.round(minMonsters * monsterMultiplier))); 
     }
-    
+
 
     if (maxMonstersInput === "") {
         maxMonsters = Math.max(minMonsters, Math.round(maxMonsters * monsterMultiplier));
     }
-    
-
-
 
 
 
@@ -419,7 +408,6 @@ document.getElementById("generateButton").addEventListener("click", function() {
     if (maxTreasuresInput === "") {
         maxTreasures = Math.max(minTreasures, Math.round(maxTreasures * treasureMultiplier));
     }
-
 
 
 
@@ -472,8 +460,6 @@ document.getElementById("generateButton").addEventListener("click", function() {
     }
 
 
-
-
     //All the alerts for if the user does something wrong
     if (dungeonName.trim() === "") {
         dungeonName = generateDungeonName();
@@ -513,8 +499,6 @@ document.getElementById("generateButton").addEventListener("click", function() {
     }
 
 
-
-
 //Makes sure each room displays what it should
 let dungeonDisplay = "";
 
@@ -545,10 +529,6 @@ for (let i = 0; i < dungeonRooms.length; i++) {
 //);
 
 
-
-
-      
-
 results.replaceChildren();
 
 let dungeon_title = document.createElement("h2");
@@ -566,10 +546,6 @@ for (let i = 0; i < dungeonRooms.length; i++) {
 
     let room_title = document.createElement("h3");
     room_title.textContent = "Room " + dungeonRooms[i].roomNumber;
-
-
-
-
 
 
 
@@ -601,11 +577,6 @@ for (let i = 0; i < dungeonRooms.length; i++) {
     }
     //let monsters = document.createElement("p");
     //monsters.textContent = "Monsters: " + dungeonRooms[i].monsters.join(', ');
-
-
-
-
-
 
 
 
