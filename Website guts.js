@@ -488,6 +488,7 @@ document.getElementById("generateButton").addEventListener("click", function() {
  
         let generatedMonsters = [];
         let generatedTreasures = [];
+        let generatedTraps = [];
     
          // Generate monsters in room types 1 and 4
          if (roomType === 1 || roomType === 4) {
@@ -520,10 +521,24 @@ document.getElementById("generateButton").addEventListener("click", function() {
             }
         }
 
+        // Generate traps in room type 3
+        if (roomType === 3) {
+            let trap_count = Math.floor(Math.random() *4) + 1;
+
+            if (trapTypes.length > 0) {
+                for (let j = 0; j < trap_count; j++) {
+                    let randomTrapIndex = Math.floor(Math.random() * trapTypes.length);
+                    let randomTrap = trapTypes[randomTrapIndex];
+        generatedTraps.push(randomTrap);
+                }
+            }
+        }
+
         dungeonRooms.push({
             roomNumber: i + 1,
             monsters: generatedMonsters,
-            treasures: generatedTreasures
+            treasures: generatedTreasures,
+            traps: generatedTraps,
         });
     }
 
@@ -680,6 +695,12 @@ for (let i = 0; i < dungeonRooms.length; i++) {
         treasureLine.textContent = treasure + " x " + treasureCounts[treasure];
 
         room.appendChild(treasureLine);
+    }
+
+    if (dungeonRooms[i].traps.length > 0) {
+        let traps = document.createElement("p");
+            traps.textContent = "Traps: " + dungeonRooms[i].traps.join(", ");
+            room.appendChild(traps);
     }
 
     results.appendChild(room);
