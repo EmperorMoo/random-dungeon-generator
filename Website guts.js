@@ -70,6 +70,7 @@ document.getElementById("monsterClear").addEventListener("mouseout", function() 
 
 const treasureTypeInput = document.getElementById("treasureType");
 const treasureTypes = ["Gold Coins", "Platinum Coins", "Ruby", "Greatsword", "Emerald"];
+const treasureListDisplay = document.getElementById("treasureList");
 
 // Adds a new treasure type to the treasureTypes array when the user presses Enter in the input field. It also clears the input field and logs the updated treasure types to the console.
 treasureTypeInput.addEventListener("keydown", function(event) {
@@ -85,6 +86,75 @@ treasureTypeInput.addEventListener("keydown", function(event) {
         renderTreasureTypes(); // re-render the treasure types after adding new ones
     }
 });
+
+//function renderTreasureTypes() {
+//    treasureListDisplay.innerHTML = "";
+
+//    treasureTypes.forEach(trap => {
+//        const button = document.createElement("button");
+//            button.textContent = trap;
+//treasureListDisplay.appendChild(button);
+//    });
+//}
+//renderTreasureTypes();
+
+const trapTypeInput = document.getElementById("trapType");
+const trapTypes = ["Spike Pit", "Swinging Blades", "Fire Rune", "Lightning Glyph", "Gravity Reversal", "Illusionary Floor", "Mimic Floor Tiles"];
+const trapListDisplay = document.getElementById("trapList");
+
+function renderTrapTypes() {
+    trapListDisplay.innerHTML = "";
+
+    trapTypes.forEach(trap => {
+        const button = document.createElement("button");
+            button.textContent = trap;
+
+trapListDisplay.appendChild(button);
+
+        // Lock the natural width of the button
+        const naturalWidth = button.offsetWidth;
+        button.style.width = `${naturalWidth}px`;
+
+        // Add hover effects
+    button.addEventListener("mouseover",function() {
+
+    button.style.backgroundColor = "#ff0000c0"
+                button.textContent = "X";
+    });
+    
+    button.addEventListener("mouseout", function() {
+
+        button.style.backgroundColor = "";
+                button.textContent = trap;
+            });
+
+        // Remove the trap when clicked
+    button.addEventListener("click", function() {
+    trapTypes.splice(trapTypes.indexOf(trap), 1);
+            renderTrapTypes();
+        });
+    });
+}
+renderTrapTypes();
+
+
+
+// Adds a new trap type to the trapTypes array when the user presses Enter in the input field. It also clears the input field and logs the updated treasure types to the console.
+trapTypeInput.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        // local variables are nifty! I can use the same name for 2 different variables in different scopes and they won't interfere. 
+        const newTypes = trapTypeInput.value.split(",").map(type => type.trim()).filter(type => type !== "");
+        if (newTypes !== undefined && newTypes.length > 0) {
+            trapTypes.push(...newTypes);
+        }
+        trapTypeInput.value = "";
+
+        renderTrapTypes(); // re-render the trap types after adding new ones
+    }
+});
+
+
 
 const dungeonAdjectives = [
     "Forgotten",
@@ -227,8 +297,6 @@ function generateDungeonName() {
 }
 
 
-
-const treasureListDisplay = document.getElementById("treasureList");
 
 // simple render function for displaying types of treasures
 function renderTreasureTypes() {
