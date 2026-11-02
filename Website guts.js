@@ -387,7 +387,7 @@ document.getElementById("generateButton").addEventListener("click", function() {
         }
         else if (maxTreasuresInput === "") {
         minTreasures = Number(minTreasuresInput);
-        maxTreasures = Math.floor(Math.random() * (11 - minTreasures)) + minTreasures;
+        maxTreasures = Math.floor(Math.random() * (6 - minTreasures)) + minTreasures;
         }
         else if (minTreasuresInput === "") {
         maxTreasures = Number(maxTreasuresInput);
@@ -399,37 +399,71 @@ document.getElementById("generateButton").addEventListener("click", function() {
         }
 
 
+    //Adjust randomly generated treasure counts based on difficulty
+    let treasureMultiplier = 1;
+    
+    if (difficulty === "easy") {
+        treasureMultiplier = 0.5;
+    }
+
+    else if (difficulty === "hard") {
+        treasureMultiplier = 1.5;
+    }
+
+    //Only scale values the user left blank
+    if (minTreasuresInput === "") {
+        minTreasures = Math.min(100, Math.max(1, Math.round(minTreasures * treasureMultiplier))); 
+    }
+    
+
+    if (maxTreasuresInput === "") {
+        maxTreasures = Math.max(minTreasures, Math.round(maxTreasures * treasureMultiplier));
+    }
+
+
+
 
 
     //Dungeon room generation code.
     let dungeonRooms = [];
 
     for (let i = 0; i < rooms; i++) {
-        let monster_count = Math.floor(Math.random() * (maxMonsters - minMonsters + 1)) + minMonsters;
-    
+        let roomType = Math.floor(Math.random() * 4) + 1;
+ 
         let generatedMonsters = [];
+        let generatedTreasures = [];
+    
+         // Generate monsters in room types 1 and 4
+         if (roomType === 1 || roomType === 4) {
+            let monster_count = Math.floor(Math.random() * (maxMonsters - minMonsters + 1)) + minMonsters;
 
-        if (monsterTypes.length > 0) {
-            for (let i = 0; i < monster_count; i++) {
+            if (monsterTypes.length > 0) {
+            for (let j = 0; j < monster_count; j++) {
                 let randomMonsterIndex = Math.floor(Math.random() * monsterTypes.length);
                 let randomMonster = monsterTypes[randomMonsterIndex];
 
                 generatedMonsters.push(randomMonster);
             }
-        }
+         }
+
         
-        let treasure_count = Math.floor(Math.random() * (maxTreasures - minTreasures + 1)) + minTreasures;
+        }
 
-        let generatedTreasures = [];
+        // Generate treasures in room types 2 and 4
+        if (roomType === 2 || roomType === 4) {
+            let treasure_count = Math.floor(Math.random() * (maxTreasures - minTreasures + 1)) + minTreasures;
 
-        if (treasureTypes.length > 0) {
-            for (let i = 0; i < treasure_count; i++) {
-                let randomTreasureIndex = Math.floor(Math.random() * treasureTypes.length);
-                let randomTreasure = treasureTypes[randomTreasureIndex];
 
-                generatedTreasures.push(randomTreasure)
+            if (treasureTypes.length > 0) {
+                for (let j = 0; j < treasure_count; j++) {
+                    let randomTreasureIndex = Math.floor(Math.random() * treasureTypes.length);
+                    let randomTreasure = treasureTypes[randomTreasureIndex];
+
+            generatedTreasures.push(randomTreasure)
+                }
             }
         }
+
         dungeonRooms.push({
             roomNumber: i + 1,
             monsters: generatedMonsters,
