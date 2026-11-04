@@ -83,7 +83,9 @@ h1, h2, p {
 #monsterList button {
     white-space: nowrap; /* Keeps button text on a single line */
 }
-
+#trapList button {
+    white-space: nowrap; /* Keeps button text on a single line */
+}
 
 .roomCountDisplay {
     text-align: center;

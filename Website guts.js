@@ -1,5 +1,13 @@
 const monsterTypeInput = document.getElementById("monsterType");
-const monsterTypes = ["Goblin", "Orc", "Skeleton", "Kobold", "Zombie", "Wolf", "Gremlin"];
+const monsterTypes = [
+    { name: "Goblin", cr: 0.25 },
+    { name: "Orc", cr: 0.5 },
+    { name: "Skeleton", cr: 0.25 },
+    { name: "Kobold", cr: 0.125 },
+    { name: "Zombie", cr: 0.25 },
+    { name: "Wolf", cr: 0.25 },
+    { name: "Gremlin", cr: 0.25 },
+    ];
 
 
 // Adds a new monster type to the monsterTypes array when the user presses Enter in the input field. It also clears the input field and logs the updated monster types to the console.
@@ -8,7 +16,12 @@ monsterTypeInput.addEventListener("keydown", function(event) {
         event.preventDefault();
         const newTypes = monsterTypeInput.value.split(",").map(type => type.trim()).filter(type => type !== "");
         if (newTypes !== undefined && newTypes.length > 0) {
-            monsterTypes.push(...newTypes);
+            newTypes.forEach(type => {
+                monsterTypes.push({
+                    name: type,
+                    cr:0.25
+                })
+            });
         }
         monsterTypeInput.value = "";
 
@@ -24,8 +37,12 @@ function renderMonsterTypes() {
     // Clear the previous content before updating
     monsterListDisplay.innerHTML = "";
     monsterTypes.forEach(monster => {
+       // monsterTypes.push({
+       //     name: type,
+       //     cr: 0.25
+       // });
         const button = document.createElement("button");
-        button.textContent = monster;
+        button.textContent = monster.name;
 
         monsterListDisplay.appendChild(button);
 
@@ -39,7 +56,7 @@ function renderMonsterTypes() {
         });
         button.addEventListener("mouseout", function() {
             button.style.backgroundColor = ""; // Reset to original color
-            button.textContent = monster; // Reset text on mouse out
+            button.textContent = monster.name; // Reset text on mouse out
         });
         // add remove functionality to each button
         button.addEventListener("click", function() {
@@ -499,7 +516,10 @@ document.getElementById("generateButton").addEventListener("click", function() {
                 let randomMonsterIndex = Math.floor(Math.random() * monsterTypes.length);
                 let randomMonster = monsterTypes[randomMonsterIndex];
 
-                generatedMonsters.push(randomMonster);
+                generatedMonsters.push({
+                    name: randomMonster.name,
+                    cr: randomMonster.cr
+                });
             }
          }
 
@@ -534,11 +554,18 @@ document.getElementById("generateButton").addEventListener("click", function() {
             }
         }
 
+        let roomCR = 0;
+
+        for (let j = 0; j < generatedMonsters.length; j++) {
+            roomCR += generatedMonsters[j].cr;
+        }
+
         dungeonRooms.push({
             roomNumber: i + 1,
             monsters: generatedMonsters,
             treasures: generatedTreasures,
             traps: generatedTraps,
+            // roomCR: roomCR,
         });
     }
 
@@ -636,6 +663,10 @@ for (let i = 0; i < dungeonRooms.length; i++) {
 
     room.appendChild(room_title);
 
+    //let roomCRDisplay = document.createElement("p");
+    //roomCRDisplay.textContent = "Challenge Rating: " + dungeonRooms[i].roomCR;
+    //room.appendChild(roomCRDisplay);
+
 
 
     if (dungeonRooms [i].monsters.length > 0) {
@@ -651,11 +682,11 @@ for (let i = 0; i < dungeonRooms.length; i++) {
     for (let j = 0; j < dungeonRooms[i].monsters.length; j++) {
         let monster = dungeonRooms[i].monsters[j];
 
-        if (monsterCounts[monster] === undefined) {
-            monsterCounts[monster] = 1;
+        if (monsterCounts[monster.name] === undefined) {
+            monsterCounts[monster.name] = 1;
         }
         else {
-            monsterCounts[monster]++;
+            monsterCounts[monster.name]++;
         }
     }
 
@@ -699,10 +730,15 @@ for (let i = 0; i < dungeonRooms.length; i++) {
 
     if (dungeonRooms[i].traps.length > 0) {
         let traps = document.createElement("p");
-            traps.textContent = "Traps: " + dungeonRooms[i].traps.join(", ");
+            traps.textContent = "Traps: " // + dungeonRooms[i].traps.join(", ");
             room.appendChild(traps);
     }
 
+    for (let j = 0; j < dungeonRooms[i].traps.length; j++) {
+        let trapLine = document.createElement("p");
+        trapLine.textContent = dungeonRooms[i].traps[j];
+        room.appendChild(trapLine);
+    }
     results.appendChild(room);
 
 }
