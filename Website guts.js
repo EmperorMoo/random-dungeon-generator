@@ -451,7 +451,7 @@ document.getElementById("generateButton").addEventListener("click", function() {
 
 
 
-    //Max and min treasure user choice or random generation
+  //Max and min treasure user choice or random generation
     let minTreasures
     let maxTreasures
 
@@ -461,7 +461,7 @@ document.getElementById("generateButton").addEventListener("click", function() {
         }
         else if (maxTreasuresInput === "") {
         minTreasures = Number(minTreasuresInput);
-        maxTreasures = Math.floor(Math.random() * (6 - minTreasures)) + minTreasures;
+        maxTreasures = Math.floor(Math.random() * (11 - minTreasures)) + minTreasures;
         }
         else if (minTreasuresInput === "") {
         maxTreasures = Number(maxTreasuresInput);
@@ -513,8 +513,48 @@ document.getElementById("generateButton").addEventListener("click", function() {
 
             if (monsterTypes.length > 0) {
             for (let j = 0; j < monster_count; j++) {
-                let randomMonsterIndex = Math.floor(Math.random() * monsterTypes.length);
-                let randomMonster = monsterTypes[randomMonsterIndex];
+
+                let totalWeight = 0;
+
+                // Calculate the total weight of all monsters
+                for (let k = 0; k < monsterTypes.length; k++) {
+                    let weight = 1;
+
+                    if (difficulty === "easy") {
+                        weight = 1 / monsterTypes[k].cr;
+                    }
+                    else if (difficulty === "hard") {
+                        weight = monsterTypes[k].cr;
+                    }
+
+                    totalWeight += weight;
+                }
+                // Pick a random weight
+                let randomWeight = Math.random() * totalWeight;
+                let randomMonster = monsterTypes[0];
+
+                // Find which monster the random weight belongs to
+                for (let k = 0; k < monsterTypes.length; k++) { 
+                    let weight = 1;
+                
+                    if (difficulty === "easy") {
+                        weight = 1 / monsterTypes[k].cr;
+                    }
+                    else if (difficulty === "hard") {
+                        weight = monsterTypes[k].cr;
+                    }
+
+                    randomWeight -= weight;
+
+                    if (randomWeight < 0) {
+                        randomMonster = monsterTypes[k];
+                        break;
+                    }
+                }
+
+
+                //let randomMonsterIndex = Math.floor(Math.random() * monsterTypes.length);
+                //let randomMonster = monsterTypes[randomMonsterlet ][randomMonsterIndex];
 
                 generatedMonsters.push({
                     name: randomMonster.name,
@@ -571,6 +611,7 @@ document.getElementById("generateButton").addEventListener("click", function() {
 
 
     //All the alerts for if the user does something wrong
+
     if (dungeonName.trim() === "") {
         dungeonName = generateDungeonName();
     } 
@@ -584,8 +625,8 @@ document.getElementById("generateButton").addEventListener("click", function() {
         return;
     }
     if (minTreasures > maxTreasures) {
-        alert("Minimum treasures cannot be greater than maximum treasures.")
-        return;
+        alert("Minimum treasures cannot be greater than maximum treasures.");
+    
     }
     if (difficulty === "") {
         alert("Please select a difficulty level.");   
@@ -606,8 +647,7 @@ document.getElementById("generateButton").addEventListener("click", function() {
     if (minTreasures < 1 || minTreasures > 10 ) {
         alert("Minimum treasures must be between 1 and 10.");
         return;
-    }
-
+    } 
 
 //Makes sure each room displays what it should
 let dungeonDisplay = "";
@@ -742,9 +782,9 @@ for (let i = 0; i < dungeonRooms.length; i++) {
     results.appendChild(room);
 
 }
+
+
+
+
+
 });
-
-
-
-
-
