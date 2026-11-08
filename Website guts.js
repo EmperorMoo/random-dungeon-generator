@@ -1,4 +1,6 @@
 const monsterTypeInput = document.getElementById("monsterType");
+const monsterCRInput = document.getElementById("monsterCR");
+const addMonsterButton = document.getElementById("addMonster");
 const monsterTypes = [
     { name: "Goblin", cr: 0.25 },
     { name: "Orc", cr: 0.5 },
@@ -11,23 +13,68 @@ const monsterTypes = [
 
 
 // Adds a new monster type to the monsterTypes array when the user presses Enter in the input field. It also clears the input field and logs the updated monster types to the console.
-monsterTypeInput.addEventListener("keydown", function(event) {
+function addMonster() {
+    const monsterName = monsterTypeInput.value.trim();
+    const monsterCR = monsterCRInput.value.trim();
+
+    if (monsterName === "") {
+        alert("Please enter both a monster name.")
+        return;
+    }
+    // Lets crValue by stored as text but also be converted to a number when it needs to be
+    let crValue = monsterCR === "" ? "0.25" : monsterCR;
+
+    let numericCR;
+
+    if (crValue.includes("/")) {
+        const parts = crValue.split("/");
+        numericCR = Number(parts[0]) / Number(parts[1]);
+    }
+    else {
+        numericCR= Number(crValue);
+    }
+
+    if (!Number.isFinite(numericCR) || numericCR <= 0) {
+        alert("Please enter a valid CR.");
+        return;
+    }
+    monsterTypes.push({
+        name: monsterName,
+        cr: numericCR
+    });
+
+    monsterTypeInput.value = "";
+    monsterCRInput.value = "";
+
+    renderMonsterTypes();
+}
+
+addMonsterButton.addEventListener("click", addMonster);
+
+monsterCRInput.addEventListener("keydown", function(event) {
     if (event.key === "Enter") {
         event.preventDefault();
-        const newTypes = monsterTypeInput.value.split(",").map(type => type.trim()).filter(type => type !== "");
-        if (newTypes !== undefined && newTypes.length > 0) {
-            newTypes.forEach(type => {
-                monsterTypes.push({
-                    name: type,
-                    cr:0.25
-                })
-            });
-        }
-        monsterTypeInput.value = "";
-
-        renderMonsterTypes(); // re-render the monster types after adding new ones
+        addMonster();
     }
 });
+
+
+    //if (event.key === "Enter") {
+    //    event.preventDefault();
+    //    const newTypes = monsterTypeInput.value.split(",").map(type => type.trim()).filter(type => type !== "");
+    //    if (newTypes !== undefined && newTypes.length > 0) {
+    //        newTypes.forEach(type => {
+    //            monsterTypes.push({
+    //                name: type,
+    //                cr:0.25
+    //            })
+    //        });
+    //    }
+    //    monsterTypeInput.value = "";
+
+    //    renderMonsterTypes(); // re-render the monster types after adding new ones
+    //}
+
 
 const monsterListDisplay = document.getElementById("monsterList");
 
@@ -42,7 +89,7 @@ function renderMonsterTypes() {
        //     cr: 0.25
        // });
         const button = document.createElement("button");
-        button.textContent = monster.name;
+        button.textContent = `${monster.name} (CR ${monster.cr})`;
 
         monsterListDisplay.appendChild(button);
 
@@ -56,7 +103,7 @@ function renderMonsterTypes() {
         });
         button.addEventListener("mouseout", function() {
             button.style.backgroundColor = ""; // Reset to original color
-            button.textContent = monster.name; // Reset text on mouse out
+            button.textContent = `${monster.name} (CR ${monster.cr})`; // Reset text on mouse out
         });
         // add remove functionality to each button
         button.addEventListener("click", function() {
@@ -645,7 +692,6 @@ document.getElementById("generateButton").addEventListener("click", function() {
         // Generate traps in room type 3
         if (roomType === 3) {
             let trapCount = Math.floor(Math.random() * (maxTraps - minTraps + 1) + minTraps);
-            console.log("Trap count:" , trapCount);
             if (trapTypes.length > 0) {
                 for (let j = 0; j < trapCount; j++) {
                     let randomTrapIndex = Math.floor(Math.random() * trapTypes.length);
@@ -666,7 +712,7 @@ document.getElementById("generateButton").addEventListener("click", function() {
             monsters: generatedMonsters,
             treasures: generatedTreasures,
             traps: generatedTraps,
-            // roomCR: roomCR,
+            roomCR: roomCR,
         });
     }
 
@@ -784,16 +830,20 @@ for (let i = 0; i < dungeonRooms.length; i++) {
         let monster = dungeonRooms[i].monsters[j];
 
         if (monsterCounts[monster.name] === undefined) {
-            monsterCounts[monster.name] = 1;
+            monsterCounts[monster.name] = {
+                count: 1,
+                cr: monster.cr
+            };
         }
         else {
-            monsterCounts[monster.name]++;
+            monsterCounts[monster.name].count++;
         }
     }
 
     for (let monster in monsterCounts) {
         let monsterLine = document.createElement("p");
-        monsterLine.textContent = monster + " x " + monsterCounts[monster];
+
+        monsterLine.textContent = monster + " (CR " + monsterCounts[monster].cr +") x " + monsterCounts[monster].count;
 
         room.appendChild(monsterLine);
     }
