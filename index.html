@@ -90,12 +90,32 @@
                 oninput="limitRange(this)" 
                 placeholder="#"
             >
-        </div>
         <div>
             <label for="treasureType">Treasure Types:</label>
             <input type="text" id="treasureType" placeholder="Add a treasure type, press Enter">
             <div class= "typeButton" id="treasureList"></div>
             <button id="treasureClear">Clear</button>
+        </div>
+                </div>
+                <div>
+            <label for="maxTraps">Maximum Traps per Room:</label>
+            <input 
+                type="number" 
+                id="maxTraps" 
+                min="1" max="10" 
+                oninput="limitRange(this)" 
+                placeholder="#"
+            >
+        </div>
+        <div>
+            <label for="minTraps">Minimum Traps per Room:</label>
+            <input 
+                type="number" 
+                id="minTraps" 
+                min="1" max="10" 
+                oninput="limitRange(this)" 
+                placeholder="#"
+            >
         </div>
         <div>
             <label for="trapType">Trap Types:</label>

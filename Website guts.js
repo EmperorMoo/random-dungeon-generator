@@ -395,7 +395,8 @@ document.getElementById("generateButton").addEventListener("click", function() {
     let minMonstersInput = document.getElementById("minMonsters").value;
     let maxTreasuresInput = document.getElementById("maxTreasures").value;
     let minTreasuresInput = document.getElementById("minTreasures").value;
-
+    const minTrapsInput = document.getElementById("minTraps").value;
+    const maxTrapsInput = document.getElementById("maxTraps").value;
     let rooms;
     if (roomInput === "") {
         rooms = Math.floor(Math.random() * 6) + 3;
@@ -473,6 +474,8 @@ document.getElementById("generateButton").addEventListener("click", function() {
         }
 
 
+
+
     //Adjust randomly generated treasure counts based on difficulty
     let treasureMultiplier = 1;
     
@@ -494,7 +497,47 @@ document.getElementById("generateButton").addEventListener("click", function() {
         maxTreasures = Math.max(minTreasures, Math.round(maxTreasures * treasureMultiplier));
     }
 
+//Max and min traps user choice or random generation
+    let minTraps
+    let maxTraps
 
+        if (maxTrapsInput === "" && minTrapsInput === "") {
+        maxTraps = Math.floor(Math.random() * 2) + 1;
+        minTraps = Math.floor(Math.random() * maxTraps) + 1;
+        }
+        else if (maxTrapsInput === "") {
+        minTraps = Number(minTrapsInput);
+        maxTraps = Math.floor(Math.random() * (3 - minTraps)) + minTraps;
+        }
+        else if (minTrapsInput === "") {
+        maxTraps = Number(maxTrapsInput);
+        minTraps = Math.floor(Math.random() * maxTraps) + 1;
+        }
+        else {
+        maxTraps = Number(maxTrapsInput);
+        minTraps = Number(minTrapsInput);
+        }
+
+//Adjust randomly generated trap counts based on difficulty
+    let trapMultiplier = 1;
+    
+    if (difficulty === "easy") {
+        trapMultiplier = 0.5;
+    }
+
+    else if (difficulty === "hard") {
+        trapMultiplier = 1.5;
+    }
+
+    //Only scale values the user left blank
+    if (minTrapsInput === "") {
+        minTraps = Math.min(100, Math.max(1, Math.round(minTraps * trapMultiplier))); 
+    }
+    
+
+    if (maxTrapsInput === "") {
+        maxTraps = Math.max(minTraps, Math.round(maxTraps * trapMultiplier));
+    }
 
 
     //Dungeon room generation code.
@@ -583,10 +626,10 @@ document.getElementById("generateButton").addEventListener("click", function() {
 
         // Generate traps in room type 3
         if (roomType === 3) {
-            let trap_count = Math.floor(Math.random() *4) + 1;
+            let trapCount = Math.floor(Math.random() * (maxTraps - minTraps + 1) + minTraps);
 
             if (trapTypes.length > 0) {
-                for (let j = 0; j < trap_count; j++) {
+                for (let j = 0; j < trapCount; j++) {
                     let randomTrapIndex = Math.floor(Math.random() * trapTypes.length);
                     let randomTrap = trapTypes[randomTrapIndex];
         generatedTraps.push(randomTrap);
