@@ -553,12 +553,12 @@ document.getElementById("generateButton").addEventListener("click", function() {
 
     //Only scale values the user left blank
     if (minTreasuresInput === "") {
-        minTreasures = Math.min(100, Math.max(1, Math.round(minTreasures * treasureMultiplier))); 
+        minTreasures = Math.min(10, Math.max(1, Math.round(minTreasures * treasureMultiplier))); 
     }
     
 
     if (maxTreasuresInput === "") {
-        maxTreasures = Math.max(minTreasures, Math.round(maxTreasures * treasureMultiplier));
+        maxTreasures = Math.min(10, Math.max(minTreasures, Math.round(maxTreasures * treasureMultiplier)));
     }
 
 //Max and min traps user choice or random generation
@@ -810,10 +810,11 @@ for (let i = 0; i < dungeonRooms.length; i++) {
 
     room.appendChild(room_title);
 
-    //let roomCRDisplay = document.createElement("p");
-    //roomCRDisplay.textContent = "Challenge Rating: " + dungeonRooms[i].roomCR;
-    //room.appendChild(roomCRDisplay);
-
+    if (dungeonRooms[i].monsters.length > 0) {
+        let roomCRDisplay = document.createElement("p");
+    roomCRDisplay.textContent = "Challenge Rating: " + dungeonRooms[i].roomCR;
+    room.appendChild(roomCRDisplay);
+    }
 
 
     if (dungeonRooms [i].monsters.length > 0) {
