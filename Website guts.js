@@ -170,7 +170,24 @@ trapTypeInput.addEventListener("keydown", function(event) {
         renderTrapTypes(); // re-render the trap types after adding new ones
     }
 });
+        const trapClearButton = document.getElementById("trapClear");
 
+        trapClearButton.addEventListener("click", function() {
+            trapTypes.length = 0;
+            renderTrapTypes();
+        });
+
+        trapClearButton.addEventListener("mouseover",function() {
+
+        trapClearButton.style.backgroundColor = "#ff0000c0"
+                //button.textContent = "X";
+        });
+    
+        trapClearButton.addEventListener("mouseout", function() {
+
+        trapClearButton.style.backgroundColor = "";
+               // button.textContent = trap;
+        });
 
 
 const dungeonAdjectives = [
@@ -502,12 +519,13 @@ document.getElementById("generateButton").addEventListener("click", function() {
     let maxTraps
 
         if (maxTrapsInput === "" && minTrapsInput === "") {
-        maxTraps = Math.floor(Math.random() * 2) + 1;
-        minTraps = Math.floor(Math.random() * maxTraps) + 1;
+        maxTraps = Math.floor(Math.random() * 4) + 2;
+            minTraps = 1;
+        //minTraps = Math.floor(Math.random() * maxTraps) + 1;
         }
         else if (maxTrapsInput === "") {
         minTraps = Number(minTrapsInput);
-        maxTraps = Math.floor(Math.random() * (3 - minTraps)) + minTraps;
+        maxTraps = Math.floor(Math.random() * (4 - minTraps)) + minTraps;
         }
         else if (minTrapsInput === "") {
         maxTraps = Number(maxTrapsInput);
@@ -627,7 +645,7 @@ document.getElementById("generateButton").addEventListener("click", function() {
         // Generate traps in room type 3
         if (roomType === 3) {
             let trapCount = Math.floor(Math.random() * (maxTraps - minTraps + 1) + minTraps);
-
+            console.log("Trap count:" , trapCount);
             if (trapTypes.length > 0) {
                 for (let j = 0; j < trapCount; j++) {
                     let randomTrapIndex = Math.floor(Math.random() * trapTypes.length);
@@ -817,9 +835,23 @@ for (let i = 0; i < dungeonRooms.length; i++) {
             room.appendChild(traps);
     }
 
+    let trapCounts = {};
+
     for (let j = 0; j < dungeonRooms[i].traps.length; j++) {
+        let trap = dungeonRooms[i].traps[j];
+
+        if (trapCounts[trap] === undefined) {
+            trapCounts[trap] = 1;
+        }
+        else {
+            trapCounts[trap]++;
+        }
+    }
+    
+    for (let trap in trapCounts) {
         let trapLine = document.createElement("p");
-        trapLine.textContent = dungeonRooms[i].traps[j];
+        trapLine.textContent = trap + " x " + trapCounts[trap];
+
         room.appendChild(trapLine);
     }
     results.appendChild(room);
