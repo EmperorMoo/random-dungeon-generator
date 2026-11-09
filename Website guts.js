@@ -249,22 +249,123 @@ function drawRoom(x, y, width, height) {
     mapContext.strokeRect(x, y, width, height);
 }
 
-drawRoom(100, 100, 300, 200);
-drawRoom(450, 100, 200, 200);
 
 function
 generateRandomRooms(roomCount) {
     mapContext.clearRect(0, 0, dungeonMapCanvas.width, dungeonMapCanvas.height);
 
+    let placedRooms = [];
+
     for (let i = 0; i < roomCount; i++) {
-        let roomWidth = Math.floor(Math.random() * 120) + 100;
-        let roomHeight = Math.floor(Math.random() * 80) + 80;
-        let x = Math.floor(Math.random() * (800 - roomWidth - 40)) + 20;
 
+        let roomWidth = Math.floor(Math.random() * 60) + 70;
+        let roomHeight = Math.floor(Math.random() * 40) + 60;
 
+        let x;
+        let y;
+        let overlapping;
+        let attempts = 0;
+
+        do {
+            overlapping = false;
+
+            x = Math.floor(Math.random() * (800 - roomWidth - 40)) + 20;
+            y = Math.floor(Math.random() * (600 - roomHeight - 40)) + 20;
+
+            for (let j = 0; j < placedRooms.length; j++) {
+                let otherRoom = placedRooms[j];
+
+                if (
+                    x < otherRoom.x + otherRoom.width + 15 &&
+                    x + roomWidth + 15 > otherRoom.x &&
+                    y < otherRoom.y + otherRoom.height + 15 &&
+                    y + roomHeight + 15 > otherRoom.y
+                ) {
+                    overlapping = true;
+                    break;
+                }
+            }
+
+            attempts++;
+        } while (overlapping && attempts < 500);
+
+        if (!overlapping) {
+            let newRoom = {
+                x: x,
+                y: y,
+                width: roomWidth,
+                height: roomHeight
+            };
+        //676767676767676767676767676767676767676767
+
+placedRooms.push(newRoom);
+        }
+    }
+
+    for (let i = 0; i < placedRooms.length - 1; i ++) {
+        drawCorridor(placedRooms[i], placedRooms[i + 1]);
+    }
+
+    for (let i = 0; i < placedRooms.length; i++) {
+        let room = placedRooms[i];
+
+        drawRoom(room.x, room.y, room.width, room.height);
     }
 }
 
+function drawCorridor(room1, room2) {
+    let centerX1 = room1.x + room1.width / 2;
+    let centerY1 = room1.y + room1.height / 2;
+
+    let centerX2 = room2.x + room2width / 2;
+    let centerY2 = room2.y + room2.height / 2;
+
+    mapContext.beginPath();
+
+    // Decide whether to connect horizontally or vertically first
+    if (Math.abs(centerX2 - centerX1) >= Math.abs(centerY2 - centerY1)) {
+
+        let startX;
+        let endX;
+
+        if (centerX2 > centerX1) {
+            startX = room1.x;
+            endX = room2.x + room2.width;
+        }
+
+        mapContext.moveTo(startX, centerY1);
+        mapContext.lineTo(endX, centerY1);
+        mapContext.lineTo(endX, centerY2);
+    } else {
+        let startY;
+        let endY;
+
+        if (centerY2 > centerY1) {
+            startY = room1.y + room1.height;
+            endY = room2.y + room2.y
+        } else {
+            startY = room1.y;
+            endY = room2.y + room2.height;
+        }
+
+        mapContext.moveTo(centerX1, startY);
+        mapContext.lineTo(centerX1, endY);
+        mapContext.lineTo(centerX2, endY);
+    }
+
+    // Draw the outer corridor
+    mapContext.strokeStyle = "#fff";
+    mapContext.lineWidth = 24;
+    mapContext.stroke();
+
+    // Draw the inside of the corridor
+    mapContext.strokeStyle = "#777";
+    mapContext.lineWidth = 16;
+    mapContext.stroke();
+}
+
+
+// 67676767676767676767676767676767
 const dungeonAdjectives = [
     "Forgotten",
     "Cursed",
@@ -499,7 +600,7 @@ function limitCr(input) {
     input.value = value;
 }
 
-// I'll come back to this mess later.
+// I'll come back to this mess later. 
 document.getElementById("generateButton").addEventListener("click", function() {
     let results = document.getElementById("dungeonResults");          
 
@@ -769,7 +870,7 @@ document.getElementById("generateButton").addEventListener("click", function() {
     }
 
 
-    //All the alerts for if the user does something wrong
+    //All the alerts for if the user does something wrong.
 
     if (dungeonName.trim() === "") {
         dungeonName = generateDungeonName();
@@ -963,8 +1064,6 @@ for (let i = 0; i < dungeonRooms.length; i++) {
 
 }
 
-
-
-
+generateRandomRooms(rooms);
 
 });
