@@ -108,7 +108,7 @@ body {
 
 #mapContainer {
     margin-top: 30px;
-    padding: 20px;
+    padding: 30px;
     background-color: #222;
     border-radius: 10px;
 }
@@ -116,7 +116,7 @@ body {
 #dungeonMapCanvas {
     display: block;
     width: 100%;
-    max-width: 800px;
+    max-width: 1400px;
     height: auto;
     background-color: #111;
     border: 2px solid #777;

@@ -236,6 +236,21 @@ trapTypeInput.addEventListener("keydown", function(event) {
                // button.textContent = trap;
         });
 
+const dungeonMapCanvas = document.getElementById("dungeonMapCanvas");
+const mapContext = dungeonMapCanvas.getContext("2d");
+
+function drawRoom(x, y, width, height) {
+    mapContext.fillStyle = "#777";
+    mapContext.strokeStyle = "#fff";
+    mapContext.fillRect(x, y, width, height);
+
+    mapContext.strokeStyle = "#fff";
+    mapContext.lineWidth = 4;
+    mapContext.strokeRect(x, y, width, height);
+}
+
+drawRoom(100, 100, 300, 200);
+drawRoom(450, 100, 200, 200);
 
 const dungeonAdjectives = [
     "Forgotten",
@@ -449,7 +464,7 @@ function limitRange(input) {
 
 // I'll come back to this mess later.
 document.getElementById("generateButton").addEventListener("click", function() {
-    let results = document.getElementById("dungeon_results");          
+    let results = document.getElementById("dungeonResults");          
 
     //Common variables used throughout the program
     let dungeonName = document.getElementById("dungeonName").value;
