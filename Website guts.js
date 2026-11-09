@@ -252,6 +252,19 @@ function drawRoom(x, y, width, height) {
 drawRoom(100, 100, 300, 200);
 drawRoom(450, 100, 200, 200);
 
+function
+generateRandomRooms(roomCount) {
+    mapContext.clearRect(0, 0, dungeonMapCanvas.width, dungeonMapCanvas.height);
+
+    for (let i = 0; i < roomCount; i++) {
+        let roomWidth = Math.floor(Math.random() * 120) + 100;
+        let roomHeight = Math.floor(Math.random() * 80) + 80;
+        let x = Math.floor(Math.random() * (800 - roomWidth - 40)) + 20;
+
+
+    }
+}
+
 const dungeonAdjectives = [
     "Forgotten",
     "Cursed",
