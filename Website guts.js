@@ -755,7 +755,9 @@ document.getElementById("generateButton").addEventListener("click", function() {
         alert("Minimum treasures must be between 1 and 10.");
         return;
     } 
-
+    if (minTraps > maxTraps) {
+        alert("Minimum traps cannot be greater thans maximum traps");
+    }
 //Makes sure each room displays what it should
 let dungeonDisplay = "";
 
