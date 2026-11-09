@@ -68,7 +68,7 @@
         <div>
             <label for="monsterType">Monster Types:</label>
             <input type="text" id="monsterType" placeholder="Add a monster type, press Enter">
-            <input type="text" id="monsterCR" placeholder="Enter monster challenge rating">
+            <input type="input" id="monsterCR" placeholder="Enter monster challenge rating" max="30" oninput="limitCr(this)">
             <button id="addMonster">Add Monster</button>
              <div class= "typeButton" id="monsterList"></div>
             <button id="monsterClear">Clear</button>

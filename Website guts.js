@@ -18,7 +18,7 @@ function addMonster() {
     const monsterCR = monsterCRInput.value.trim();
 
     if (monsterName === "") {
-        alert("Please enter both a monster name.")
+        alert("Please enter a monster name.")
         return;
     }
     // Lets crValue by stored as text but also be converted to a number when it needs to be
@@ -461,6 +461,30 @@ function limitRange(input) {
     input.value = value; // Update the input field with the validated value
 }
 
+function limitCr(input) {
+    let value = input.value.replace(/[^\d.]/g, ''); // Remove characters that aren't digits or dots
+
+    let parts = value.split('.');
+    if (parts.length > 2) {
+        value = parts[0] + '.' + parts.slice(1).join('');
+    }
+
+    if (value !== "") {
+        let numericValue = parseFloat(value, 10);
+        let min = parseFloat(input.min, 10);
+        let max = parseFloat(input.max, 10);
+
+        if (!isNaN(max) && numericValue > max) {
+            value = String(max);
+        }
+    }
+
+    if (input.value.endsWith('.') && !value.endsWith('.')) {
+        value += '.';
+    }
+
+    input.value = value;
+}
 
 // I'll come back to this mess later.
 document.getElementById("generateButton").addEventListener("click", function() {
