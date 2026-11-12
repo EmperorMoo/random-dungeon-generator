@@ -238,6 +238,9 @@ trapTypeInput.addEventListener("keydown", function(event) {
 
 const dungeonMapCanvas = document.getElementById("dungeonMapCanvas");
 const mapContext = dungeonMapCanvas.getContext("2d");
+const gridSize = 40;
+const gridColumns = dungeonMapCanvas.width / gridSize;
+const gridRows = dungeonMapCanvas.height / gridSize;
 
 function drawRoom(x, y, width, height) {
     mapContext.fillStyle = "#777";
@@ -249,37 +252,72 @@ function drawRoom(x, y, width, height) {
     mapContext.strokeRect(x, y, width, height);
 }
 
+function drawGrid() {
+    mapContext.strokeStyle = "#444";
+    mapContext.lineWidth = 1;
 
-function
-generateRandomRooms(roomCount) {
+    for (let x = 0; x <= dungeonMapCanvas.width; x += gridSize) {
+        mapContext.beginPath();
+        mapContext.moveTo(x, 0);
+        mapContext.lineTo(x, dungeonMapCanvas.height);
+        mapContext.stroke();
+    }
+
+    for (let y = 0; y <= dungeonMapCanvas.height; y += gridSize) {
+        mapContext.beginPath();
+        mapContext.moveTo(0, y);
+        mapContext.lineTo(dungeonMapCanvas.width, y);
+        mapContext.stroke();
+    }
+}
+
+const showGridCheckbox = document.getElementById("showGrid");
+
+let baseMapImage = null;
+
+
+function generateRandomRooms(roomCount) {
     mapContext.clearRect(0, 0, dungeonMapCanvas.width, dungeonMapCanvas.height);
 
     let placedRooms = [];
 
+
     for (let i = 0; i < roomCount; i++) {
 
-        let roomWidth = Math.floor(Math.random() * 60) + 70;
-        let roomHeight = Math.floor(Math.random() * 40) + 60;
+        let roomWidth = (Math.floor(Math.random() * 2) + 2) * gridSize;
+        let roomHeight = (Math.floor(Math.random() * 2) + 2) * gridSize;
 
         let x;
         let y;
         let overlapping;
         let attempts = 0;
+        let possiblePositions = [];
+
+        for (let candidateX = gridSize; 
+            candidateX <= dungeonMapCanvas.width - roomWidth - gridSize; candidateX += gridSize) {
+            for (let candidateY = gridSize; 
+                candidateY <= dungeonMapCanvas.height - roomHeight - gridSize; candidateY += gridSize) {
+                possiblePositions.push({ x: candidateX, y: candidateY });
+            }
+        }
+
+        possiblePositions.sort(() => Math.random() - 0.5);
 
         do {
             overlapping = false;
 
-            x = Math.floor(Math.random() * (800 - roomWidth - 40)) + 20;
-            y = Math.floor(Math.random() * (600 - roomHeight - 40)) + 20;
+            let position = possiblePositions.pop();
+            x = position.x;
+            y = position.y;
 
             for (let j = 0; j < placedRooms.length; j++) {
                 let otherRoom = placedRooms[j];
 
                 if (
-                    x < otherRoom.x + otherRoom.width + 15 &&
-                    x + roomWidth + 15 > otherRoom.x &&
-                    y < otherRoom.y + otherRoom.height + 15 &&
-                    y + roomHeight + 15 > otherRoom.y
+                    x < otherRoom.x + otherRoom.width + 5 &&
+                    x + roomWidth + 5 > otherRoom.x &&
+                    y < otherRoom.y + otherRoom.height + 5 &&
+                    y + roomHeight + 5 > otherRoom.y
                 ) {
                     overlapping = true;
                     break;
@@ -287,7 +325,7 @@ generateRandomRooms(roomCount) {
             }
 
             attempts++;
-        } while (overlapping && attempts < 500);
+        } while (overlapping && possiblePositions.length > 0);
 
         if (!overlapping) {
             let newRoom = {
@@ -296,7 +334,7 @@ generateRandomRooms(roomCount) {
                 width: roomWidth,
                 height: roomHeight
             };
-        //676767676767676767676767676767676767676767676767
+        //6767676767676767676767676767676767676767676767676767
 
 placedRooms.push(newRoom);
         }
@@ -309,7 +347,23 @@ placedRooms.push(newRoom);
 
         drawRoom(room.x, room.y, room.width, room.height);
     }
+
+    baseMapImage = mapContext.getImageData(0, 0, dungeonMapCanvas.width, dungeonMapCanvas.height);
+    
+    if (showGridCheckbox.checked) {
+        drawGrid();
+    }
 }
+
+showGridCheckbox.addEventListener("change", function() {
+    if (baseMapImage === null) {
+        return;
+    }
+mapContext.putImageData(baseMapImage, 0, 0);
+    if (showGridCheckbox.checked) {
+        drawGrid();
+    }
+});
 
 function connectRooms(rooms) {
     if (rooms.length < 2) {
@@ -353,47 +407,26 @@ function connectRooms(rooms) {
 }
 
 function drawCorridor(room1, room2) {
-    let centerX1 = room1.x + room1.width / 2;
-    let centerY1 = room1.y + room1.height / 2;
+    let centerX1 = Math.floor((room1.x + room1.width / 2) / gridSize) * gridSize + gridSize / 2;
+    let centerY1 = Math.floor((room1.y + room1.height / 2) / gridSize) * gridSize + gridSize / 2;
 
-    let centerX2 = room2.x + room2.width / 2;
-    let centerY2 = room2.y + room2.height / 2;
+    let centerX2 = Math.floor((room2.x + room2.width / 2) / gridSize) * gridSize + gridSize / 2;
+    let centerY2 = Math.floor((room2.y + room2.height / 2) / gridSize) * gridSize + gridSize / 2;
 
     mapContext.beginPath();
 
     // Decide whether to connect horizontally or vertically first
     if (Math.abs(centerX2 - centerX1) >= Math.abs(centerY2 - centerY1)) {
 
-        let startX;
-        let endX;
+        mapContext.moveTo(centerX1, centerY1);
+        mapContext.lineTo(centerX2, centerY1);
+        mapContext.lineTo(centerX2, centerY2);
 
-        if (centerX2 > centerX1) {
-            startX = room1.x + room2.width;
-            endX = room2.x;
         } else {
-            startX = room1.x;
-            endX = room2.x + room2.width;
+        mapContext.moveTo(centerX1, centerY1);
+        mapContext.lineTo(centerX1, centerY2);
+        mapContext.lineTo(centerX2, centerY2);
         }
-
-        mapContext.moveTo(startX, centerY1);
-        mapContext.lineTo(endX, centerY1);
-        mapContext.lineTo(endX, centerY2);
-    } else {
-        let startY;
-        let endY;
-
-        if (centerY2 > centerY1) {
-            startY = room1.y + room1.height;
-            endY = room2.y;
-        } else {
-            startY = room1.y;
-            endY = room2.y + room2.height;
-        }
-
-        mapContext.moveTo(centerX1, startY);
-        mapContext.lineTo(centerX1, endY);
-        mapContext.lineTo(centerX2, endY);
-    }
 
     // Draw the outer corridor
     mapContext.strokeStyle = "#fff";
@@ -407,7 +440,7 @@ function drawCorridor(room1, room2) {
 }
 
 
-// 67676767676767676767676767676767676767676767676767676767676767676767676767676767
+// 6767676767676767676767676767676767676767676767676767676767
 const dungeonAdjectives = [
     "Forgotten",
     "Cursed",
