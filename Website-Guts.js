@@ -334,7 +334,7 @@ function generateRandomRooms(roomCount) {
                 width: roomWidth,
                 height: roomHeight
             };
-        //6767676767676767676767676767676767676767676767676767
+        //6767676767676767676767676767676767676767676767676767676767
 
 placedRooms.push(newRoom);
         }
